@@ -1,0 +1,569 @@
+Namespace(train='../../../githubRepos/parsing-mismatches/train_data/fa/persian_train_A_C_sents=200_seed=2.conllu', dev='../../../githubRepos/parsing-mismatches/dev_data/fa/persian_dev_corpus=A_sents=100_seed=2.txt', output='../../../githubRepos/parsing-mismatches/models/', epochs=100, glove_emb=None, elmo_opts=None, elmo_weights=None, random_seed=1, disable_early_stopping=False, early_stopping_on='uas', max_epochs_without_improvement=5, word_emb_size=100, tag_emb_size=40, bilstm_num_layers=2, bilstm_hidden_size=400, bilstm_dropout=0.1, batch_size=64, mlp_hidden_size=500, mlp_output_size=100, pos_count_threshold=0, pos_hidden_size=100, learning_rate=0.001, char_emb=False, char_emb_hidden_size=25, char_emb_size=50, position_emb=False, position_emb_max_pos=150, position_emb_size=20, bert=False, bert_batch_size=1, bert_layers='-1,-2,-3,-4', bert_store_features=False, bert_load_features=False, bert_hidden_size=768, bert_max_seq_length=512, bert_multilingual_cased=False, polyglot=None, loss_weight_factor=1.0, cnn_ce=False, cnn_embeddings_size=50, cnn_ce_kernel_size=3, cnn_ce_out_channels=50, use_head=False, beta1=0.9, beta2=0.999, weight_decay=0.0, slanted_triangle_lr=False, dropout=0.2, part_of_speech='upos', which_cuda=0)
+
+setting random seed to 1
+
+loading training data from ../../../githubRepos/parsing-mismatches/train_data/fa/persian_train_A_C_sents=200_seed=2.conllu
+200 sentences read.
+14 non-projective sentences found, 0 dropped.
+200 sentences remaining.
+
+loading development data from ../../../githubRepos/parsing-mismatches/dev_data/fa/persian_dev_corpus=A_sents=100_seed=2.txt
+100 sentences read.
+15 non-projective sentences found, 0 dropped.
+100 sentences remaining.
+
+making vocabularies
+1,750 distinct words
+19 distinct POS tags
+76 distinct characters
+76 distinct positions with count > 0
+42 distinct dependencies
+
+training
+starting epoch 0
+loss = 8.105819702148438
+loss = 8.048381805419922
+loss = 7.979454040527344
+loss = 7.8441267013549805
+--------------------------------------------------
+epoch 0
+  elapsed time: 0 minutes and 6 seconds
+  dev uas: 463 / 1773 * 100 = 26.11 %
+  dev las: 7 / 1773 * 100 = 0.39 %
+current best
+saving ../../../githubRepos/parsing-mismatches/models/pat
+--------------------------------------------------
+starting epoch 1
+loss = 7.475780487060547
+loss = 7.675084590911865
+loss = 7.043177127838135
+loss = 6.991915702819824
+--------------------------------------------------
+epoch 1
+  elapsed time: 0 minutes and 6 seconds
+  dev uas: 477 / 1773 * 100 = 26.90 %
+  dev las: 6 / 1773 * 100 = 0.34 %
+current best
+saving ../../../githubRepos/parsing-mismatches/models/pat
+--------------------------------------------------
+starting epoch 2
+loss = 7.010258674621582
+loss = 6.830360412597656
+loss = 6.584778785705566
+loss = 6.634790420532227
+--------------------------------------------------
+epoch 2
+  elapsed time: 0 minutes and 5 seconds
+  dev uas: 478 / 1773 * 100 = 26.96 %
+  dev las: 106 / 1773 * 100 = 5.98 %
+current best
+saving ../../../githubRepos/parsing-mismatches/models/pat
+--------------------------------------------------
+starting epoch 3
+loss = 6.475425720214844
+loss = 6.342046737670898
+loss = 6.246720314025879
+loss = 6.225605010986328
+--------------------------------------------------
+epoch 3
+  elapsed time: 0 minutes and 5 seconds
+  dev uas: 475 / 1773 * 100 = 26.79 %
+  dev las: 195 / 1773 * 100 = 11.00 %
+no improvement for 1 epochs
+--------------------------------------------------
+starting epoch 4
+loss = 6.144916534423828
+loss = 6.0645599365234375
+loss = 6.0299530029296875
+loss = 5.854213714599609
+--------------------------------------------------
+epoch 4
+  elapsed time: 0 minutes and 5 seconds
+  dev uas: 466 / 1773 * 100 = 26.28 %
+  dev las: 196 / 1773 * 100 = 11.05 %
+no improvement for 2 epochs
+--------------------------------------------------
+starting epoch 5
+loss = 5.905674934387207
+loss = 5.831143379211426
+loss = 5.846636772155762
+loss = 5.554637908935547
+--------------------------------------------------
+epoch 5
+  elapsed time: 0 minutes and 5 seconds
+  dev uas: 436 / 1773 * 100 = 24.59 %
+  dev las: 198 / 1773 * 100 = 11.17 %
+no improvement for 3 epochs
+--------------------------------------------------
+starting epoch 6
+loss = 5.696717262268066
+loss = 5.68866491317749
+loss = 5.610719680786133
+loss = 5.35793399810791
+--------------------------------------------------
+epoch 6
+  elapsed time: 0 minutes and 6 seconds
+  dev uas: 479 / 1773 * 100 = 27.02 %
+  dev las: 261 / 1773 * 100 = 14.72 %
+current best
+saving ../../../githubRepos/parsing-mismatches/models/pat
+--------------------------------------------------
+starting epoch 7
+loss = 5.517306804656982
+loss = 5.466190814971924
+loss = 5.358746528625488
+loss = 5.259195327758789
+--------------------------------------------------
+epoch 7
+  elapsed time: 0 minutes and 5 seconds
+  dev uas: 470 / 1773 * 100 = 26.51 %
+  dev las: 217 / 1773 * 100 = 12.24 %
+no improvement for 1 epochs
+--------------------------------------------------
+starting epoch 8
+loss = 5.353160381317139
+loss = 5.226088523864746
+loss = 5.116648197174072
+loss = 5.34013557434082
+--------------------------------------------------
+epoch 8
+  elapsed time: 0 minutes and 5 seconds
+  dev uas: 509 / 1773 * 100 = 28.71 %
+  dev las: 281 / 1773 * 100 = 15.85 %
+current best
+saving ../../../githubRepos/parsing-mismatches/models/pat
+--------------------------------------------------
+starting epoch 9
+loss = 5.044013977050781
+loss = 5.081817150115967
+loss = 4.957630157470703
+loss = 4.867082118988037
+--------------------------------------------------
+epoch 9
+  elapsed time: 0 minutes and 5 seconds
+  dev uas: 583 / 1773 * 100 = 32.88 %
+  dev las: 323 / 1773 * 100 = 18.22 %
+current best
+saving ../../../githubRepos/parsing-mismatches/models/pat
+--------------------------------------------------
+starting epoch 10
+loss = 4.930222511291504
+loss = 4.5947113037109375
+loss = 4.822896480560303
+loss = 4.572622299194336
+--------------------------------------------------
+epoch 10
+  elapsed time: 0 minutes and 5 seconds
+  dev uas: 604 / 1773 * 100 = 34.07 %
+  dev las: 368 / 1773 * 100 = 20.76 %
+current best
+saving ../../../githubRepos/parsing-mismatches/models/pat
+--------------------------------------------------
+starting epoch 11
+loss = 4.645773887634277
+loss = 4.510885238647461
+loss = 4.455310821533203
+loss = 4.780649185180664
+--------------------------------------------------
+epoch 11
+  elapsed time: 0 minutes and 6 seconds
+  dev uas: 627 / 1773 * 100 = 35.36 %
+  dev las: 395 / 1773 * 100 = 22.28 %
+current best
+saving ../../../githubRepos/parsing-mismatches/models/pat
+--------------------------------------------------
+starting epoch 12
+loss = 4.205812931060791
+loss = 4.413002014160156
+loss = 4.294750213623047
+loss = 4.4681572914123535
+--------------------------------------------------
+epoch 12
+  elapsed time: 0 minutes and 5 seconds
+  dev uas: 704 / 1773 * 100 = 39.71 %
+  dev las: 445 / 1773 * 100 = 25.10 %
+current best
+saving ../../../githubRepos/parsing-mismatches/models/pat
+--------------------------------------------------
+starting epoch 13
+loss = 4.214165687561035
+loss = 4.208617687225342
+loss = 3.9490861892700195
+loss = 3.8415703773498535
+--------------------------------------------------
+epoch 13
+  elapsed time: 0 minutes and 5 seconds
+  dev uas: 710 / 1773 * 100 = 40.05 %
+  dev las: 478 / 1773 * 100 = 26.96 %
+current best
+saving ../../../githubRepos/parsing-mismatches/models/pat
+--------------------------------------------------
+starting epoch 14
+loss = 3.9970297813415527
+loss = 3.705203056335449
+loss = 3.8449487686157227
+loss = 4.175296783447266
+--------------------------------------------------
+epoch 14
+  elapsed time: 0 minutes and 4 seconds
+  dev uas: 771 / 1773 * 100 = 43.49 %
+  dev las: 561 / 1773 * 100 = 31.64 %
+current best
+saving ../../../githubRepos/parsing-mismatches/models/pat
+--------------------------------------------------
+starting epoch 15
+loss = 3.779940128326416
+loss = 3.611269950866699
+loss = 3.56325626373291
+loss = 3.6385364532470703
+--------------------------------------------------
+epoch 15
+  elapsed time: 0 minutes and 4 seconds
+  dev uas: 832 / 1773 * 100 = 46.93 %
+  dev las: 606 / 1773 * 100 = 34.18 %
+current best
+saving ../../../githubRepos/parsing-mismatches/models/pat
+--------------------------------------------------
+starting epoch 16
+loss = 3.5158281326293945
+loss = 3.4848883152008057
+loss = 3.3436279296875
+loss = 3.679441452026367
+--------------------------------------------------
+epoch 16
+  elapsed time: 0 minutes and 5 seconds
+  dev uas: 841 / 1773 * 100 = 47.43 %
+  dev las: 596 / 1773 * 100 = 33.62 %
+current best
+saving ../../../githubRepos/parsing-mismatches/models/pat
+--------------------------------------------------
+starting epoch 17
+loss = 3.3070549964904785
+loss = 3.1700029373168945
+loss = 3.379462718963623
+loss = 3.165159225463867
+--------------------------------------------------
+epoch 17
+  elapsed time: 0 minutes and 6 seconds
+  dev uas: 871 / 1773 * 100 = 49.13 %
+  dev las: 663 / 1773 * 100 = 37.39 %
+current best
+saving ../../../githubRepos/parsing-mismatches/models/pat
+--------------------------------------------------
+starting epoch 18
+loss = 3.0246970653533936
+loss = 3.084712505340576
+loss = 3.147789716720581
+loss = 2.6594035625457764
+--------------------------------------------------
+epoch 18
+  elapsed time: 0 minutes and 5 seconds
+  dev uas: 847 / 1773 * 100 = 47.77 %
+  dev las: 654 / 1773 * 100 = 36.89 %
+no improvement for 1 epochs
+--------------------------------------------------
+starting epoch 19
+loss = 2.9436750411987305
+loss = 2.913841724395752
+loss = 2.9117424488067627
+loss = 2.6669766902923584
+--------------------------------------------------
+epoch 19
+  elapsed time: 0 minutes and 5 seconds
+  dev uas: 841 / 1773 * 100 = 47.43 %
+  dev las: 651 / 1773 * 100 = 36.72 %
+no improvement for 2 epochs
+--------------------------------------------------
+starting epoch 20
+loss = 2.912599563598633
+loss = 2.570286273956299
+loss = 2.7617058753967285
+loss = 2.7941112518310547
+--------------------------------------------------
+epoch 20
+  elapsed time: 0 minutes and 5 seconds
+  dev uas: 898 / 1773 * 100 = 50.65 %
+  dev las: 682 / 1773 * 100 = 38.47 %
+current best
+saving ../../../githubRepos/parsing-mismatches/models/pat
+--------------------------------------------------
+starting epoch 21
+loss = 2.481865406036377
+loss = 2.774397134780884
+loss = 2.496793746948242
+loss = 2.1623902320861816
+--------------------------------------------------
+epoch 21
+  elapsed time: 0 minutes and 5 seconds
+  dev uas: 922 / 1773 * 100 = 52.00 %
+  dev las: 769 / 1773 * 100 = 43.37 %
+current best
+saving ../../../githubRepos/parsing-mismatches/models/pat
+--------------------------------------------------
+starting epoch 22
+loss = 2.461970329284668
+loss = 2.404841661453247
+loss = 2.4527626037597656
+loss = 2.9001307487487793
+--------------------------------------------------
+epoch 22
+  elapsed time: 0 minutes and 5 seconds
+  dev uas: 919 / 1773 * 100 = 51.83 %
+  dev las: 727 / 1773 * 100 = 41.00 %
+no improvement for 1 epochs
+--------------------------------------------------
+starting epoch 23
+loss = 2.34238862991333
+loss = 2.228008270263672
+loss = 2.324845314025879
+loss = 2.435870409011841
+--------------------------------------------------
+epoch 23
+  elapsed time: 0 minutes and 5 seconds
+  dev uas: 966 / 1773 * 100 = 54.48 %
+  dev las: 793 / 1773 * 100 = 44.73 %
+current best
+saving ../../../githubRepos/parsing-mismatches/models/pat
+--------------------------------------------------
+starting epoch 24
+loss = 2.296259880065918
+loss = 2.2246813774108887
+loss = 2.025341272354126
+loss = 1.5257415771484375
+--------------------------------------------------
+epoch 24
+  elapsed time: 0 minutes and 5 seconds
+  dev uas: 959 / 1773 * 100 = 54.09 %
+  dev las: 743 / 1773 * 100 = 41.91 %
+no improvement for 1 epochs
+--------------------------------------------------
+starting epoch 25
+loss = 2.133246421813965
+loss = 1.8866978883743286
+loss = 2.016317844390869
+loss = 2.2461302280426025
+--------------------------------------------------
+epoch 25
+  elapsed time: 0 minutes and 5 seconds
+  dev uas: 984 / 1773 * 100 = 55.50 %
+  dev las: 804 / 1773 * 100 = 45.35 %
+current best
+saving ../../../githubRepos/parsing-mismatches/models/pat
+--------------------------------------------------
+starting epoch 26
+loss = 1.8433196544647217
+loss = 2.057340621948242
+loss = 1.8275182247161865
+loss = 1.8671436309814453
+--------------------------------------------------
+epoch 26
+  elapsed time: 0 minutes and 5 seconds
+  dev uas: 984 / 1773 * 100 = 55.50 %
+  dev las: 781 / 1773 * 100 = 44.05 %
+no improvement for 1 epochs
+--------------------------------------------------
+starting epoch 27
+loss = 1.8563766479492188
+loss = 1.796746015548706
+loss = 1.6417279243469238
+loss = 1.774406909942627
+--------------------------------------------------
+epoch 27
+  elapsed time: 0 minutes and 6 seconds
+  dev uas: 1012 / 1773 * 100 = 57.08 %
+  dev las: 849 / 1773 * 100 = 47.88 %
+current best
+saving ../../../githubRepos/parsing-mismatches/models/pat
+--------------------------------------------------
+starting epoch 28
+loss = 1.760545015335083
+loss = 1.723369836807251
+loss = 1.5687260627746582
+loss = 1.5321420431137085
+--------------------------------------------------
+epoch 28
+  elapsed time: 0 minutes and 5 seconds
+  dev uas: 1003 / 1773 * 100 = 56.57 %
+  dev las: 793 / 1773 * 100 = 44.73 %
+no improvement for 1 epochs
+--------------------------------------------------
+starting epoch 29
+loss = 1.584512710571289
+loss = 1.5828022956848145
+loss = 1.6246912479400635
+loss = 1.3568156957626343
+--------------------------------------------------
+epoch 29
+  elapsed time: 0 minutes and 5 seconds
+  dev uas: 1009 / 1773 * 100 = 56.91 %
+  dev las: 823 / 1773 * 100 = 46.42 %
+no improvement for 2 epochs
+--------------------------------------------------
+starting epoch 30
+loss = 1.5813168287277222
+loss = 1.4582931995391846
+loss = 1.3902331590652466
+loss = 1.4718106985092163
+--------------------------------------------------
+epoch 30
+  elapsed time: 0 minutes and 5 seconds
+  dev uas: 1044 / 1773 * 100 = 58.88 %
+  dev las: 838 / 1773 * 100 = 47.26 %
+current best
+saving ../../../githubRepos/parsing-mismatches/models/pat
+--------------------------------------------------
+starting epoch 31
+loss = 1.41655695438385
+loss = 1.3838986158370972
+loss = 1.4360088109970093
+loss = 1.1161854267120361
+--------------------------------------------------
+epoch 31
+  elapsed time: 0 minutes and 5 seconds
+  dev uas: 1010 / 1773 * 100 = 56.97 %
+  dev las: 824 / 1773 * 100 = 46.47 %
+no improvement for 1 epochs
+--------------------------------------------------
+starting epoch 32
+loss = 1.2599055767059326
+loss = 1.3859667778015137
+loss = 1.2847228050231934
+loss = 1.2577075958251953
+--------------------------------------------------
+epoch 32
+  elapsed time: 0 minutes and 5 seconds
+  dev uas: 1041 / 1773 * 100 = 58.71 %
+  dev las: 851 / 1773 * 100 = 48.00 %
+no improvement for 2 epochs
+--------------------------------------------------
+starting epoch 33
+loss = 1.264525294303894
+loss = 1.2676246166229248
+loss = 1.2330403327941895
+loss = 1.1741001605987549
+--------------------------------------------------
+epoch 33
+  elapsed time: 0 minutes and 5 seconds
+  dev uas: 1030 / 1773 * 100 = 58.09 %
+  dev las: 846 / 1773 * 100 = 47.72 %
+no improvement for 3 epochs
+--------------------------------------------------
+starting epoch 34
+loss = 1.1406995058059692
+loss = 1.252328872680664
+loss = 1.2083159685134888
+loss = 1.0053200721740723
+--------------------------------------------------
+epoch 34
+  elapsed time: 0 minutes and 5 seconds
+  dev uas: 1067 / 1773 * 100 = 60.18 %
+  dev las: 856 / 1773 * 100 = 48.28 %
+current best
+saving ../../../githubRepos/parsing-mismatches/models/pat
+--------------------------------------------------
+starting epoch 35
+loss = 1.2500425577163696
+loss = 1.0897263288497925
+loss = 1.0389044284820557
+loss = 1.296897292137146
+--------------------------------------------------
+epoch 35
+  elapsed time: 0 minutes and 6 seconds
+  dev uas: 1030 / 1773 * 100 = 58.09 %
+  dev las: 801 / 1773 * 100 = 45.18 %
+no improvement for 1 epochs
+--------------------------------------------------
+starting epoch 36
+loss = 1.0695877075195312
+loss = 1.0013607740402222
+loss = 1.1284480094909668
+loss = 1.244797945022583
+--------------------------------------------------
+epoch 36
+  elapsed time: 0 minutes and 5 seconds
+  dev uas: 1063 / 1773 * 100 = 59.95 %
+  dev las: 841 / 1773 * 100 = 47.43 %
+no improvement for 2 epochs
+--------------------------------------------------
+starting epoch 37
+loss = 1.0716005563735962
+loss = 1.030571699142456
+loss = 0.9354327917098999
+loss = 0.9635325074195862
+--------------------------------------------------
+epoch 37
+  elapsed time: 0 minutes and 5 seconds
+  dev uas: 1078 / 1773 * 100 = 60.80 %
+  dev las: 879 / 1773 * 100 = 49.58 %
+current best
+saving ../../../githubRepos/parsing-mismatches/models/pat
+--------------------------------------------------
+starting epoch 38
+loss = 0.9218167662620544
+loss = 1.0636745691299438
+loss = 0.9078574180603027
+loss = 0.8018020987510681
+--------------------------------------------------
+epoch 38
+  elapsed time: 0 minutes and 4 seconds
+  dev uas: 1076 / 1773 * 100 = 60.69 %
+  dev las: 827 / 1773 * 100 = 46.64 %
+no improvement for 1 epochs
+--------------------------------------------------
+starting epoch 39
+loss = 0.8527398109436035
+loss = 0.9726285934448242
+loss = 0.8844962120056152
+loss = 0.8716890215873718
+--------------------------------------------------
+epoch 39
+  elapsed time: 0 minutes and 5 seconds
+  dev uas: 1050 / 1773 * 100 = 59.22 %
+  dev las: 819 / 1773 * 100 = 46.19 %
+no improvement for 2 epochs
+--------------------------------------------------
+starting epoch 40
+loss = 0.8664959669113159
+loss = 0.8228662610054016
+loss = 0.781571090221405
+loss = 1.1583575010299683
+--------------------------------------------------
+epoch 40
+  elapsed time: 0 minutes and 4 seconds
+  dev uas: 1077 / 1773 * 100 = 60.74 %
+  dev las: 878 / 1773 * 100 = 49.52 %
+no improvement for 3 epochs
+--------------------------------------------------
+starting epoch 41
+loss = 0.751370906829834
+loss = 0.7881314754486084
+loss = 0.7848844528198242
+loss = 0.8468067646026611
+--------------------------------------------------
+epoch 41
+  elapsed time: 0 minutes and 4 seconds
+  dev uas: 1052 / 1773 * 100 = 59.33 %
+  dev las: 835 / 1773 * 100 = 47.10 %
+no improvement for 4 epochs
+--------------------------------------------------
+starting epoch 42
+loss = 0.6621710062026978
+loss = 0.7691072225570679
+loss = 0.7547340393066406
+loss = 0.6733033061027527
+--------------------------------------------------
+epoch 42
+  elapsed time: 0 minutes and 5 seconds
+  dev uas: 1058 / 1773 * 100 = 59.67 %
+  dev las: 841 / 1773 * 100 = 47.43 %
+no improvement for 5 epochs
+quitting
+--------------------------------------------------
+best model found in epoch 37
+False   3   50   50
+  dev uas and las: 1078 / 1773 * 100 = 60.80 % 879 / 1773 * 100 = 49.58 %   uas
+
+
+
+
+

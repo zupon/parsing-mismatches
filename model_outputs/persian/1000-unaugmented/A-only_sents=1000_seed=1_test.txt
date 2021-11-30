@@ -1,0 +1,787 @@
+loading model from ../../../githubRepos/parsing-mismatches/models/pat
+loading test dataset from ../../../githubRepos/parsing-mismatches/data/PerDT/fa_perdt-ud-test-removeLines.conllu
+1,456 sentences read.
+198 non-projective sentences found, 0 dropped.
+1,456 sentences remaining.
+Namespace(train='../../../githubRepos/parsing-mismatches/train_data/fa/persian_train_corpus=A_sents=1000_seed=1.txt', dev='../../../githubRepos/parsing-mismatches/dev_data/fa/persian_dev_corpus=A_sents=1000_seed=1.txt', output='../../../githubRepos/parsing-mismatches/models/', epochs=100, glove_emb=None, elmo_opts=None, elmo_weights=None, random_seed=1, disable_early_stopping=False, early_stopping_on='uas', max_epochs_without_improvement=5, word_emb_size=100, tag_emb_size=40, bilstm_num_layers=2, bilstm_hidden_size=400, bilstm_dropout=0.1, batch_size=64, mlp_hidden_size=500, mlp_output_size=100, pos_count_threshold=0, pos_hidden_size=100, learning_rate=0.001, char_emb=False, char_emb_hidden_size=25, char_emb_size=50, position_emb=False, position_emb_max_pos=150, position_emb_size=20, bert=False, bert_batch_size=1, bert_layers='-1,-2,-3,-4', bert_store_features=False, bert_load_features=False, bert_hidden_size=768, bert_max_seq_length=512, bert_multilingual_cased=False, polyglot=None, loss_weight_factor=1.0, cnn_ce=False, cnn_embeddings_size=50, cnn_ce_kernel_size=3, cnn_ce_out_channels=50, use_head=False, beta1=0.9, beta2=0.999, weight_decay=0.0, slanted_triangle_lr=False, dropout=0.2, part_of_speech='upos', which_cuda=0)
+Namespace(model='../../../githubRepos/parsing-mismatches/models/pat', test='../../../githubRepos/parsing-mismatches/data/PerDT/fa_perdt-ud-test-removeLines.conllu', batch_size=64, no_cycles=False, no_cycles_strategy='optimal', print_nr_of_cycles=False, which_cuda=0)
+parsing test dataset
+(Namespace(train='../../../githubRepos/parsing-mismatches/train_data/fa/persian_train_corpus=A_sents=1000_seed=1.txt', dev='../../../githubRepos/parsing-mismatches/dev_data/fa/persian_dev_corpus=A_sents=1000_seed=1.txt', output='../../../githubRepos/parsing-mismatches/models/', epochs=100, glove_emb=None, elmo_opts=None, elmo_weights=None, random_seed=1, disable_early_stopping=False, early_stopping_on='uas', max_epochs_without_improvement=5, word_emb_size=100, tag_emb_size=40, bilstm_num_layers=2, bilstm_hidden_size=400, bilstm_dropout=0.1, batch_size=64, mlp_hidden_size=500, mlp_output_size=100, pos_count_threshold=0, pos_hidden_size=100, learning_rate=0.001, char_emb=False, char_emb_hidden_size=25, char_emb_size=50, position_emb=False, position_emb_max_pos=150, position_emb_size=20, bert=False, bert_batch_size=1, bert_layers='-1,-2,-3,-4', bert_store_features=False, bert_load_features=False, bert_hidden_size=768, bert_max_seq_length=512, bert_multilingual_cased=False, polyglot=None, loss_weight_factor=1.0, cnn_ce=False, cnn_embeddings_size=50, cnn_ce_kernel_size=3, cnn_ce_out_channels=50, use_head=False, beta1=0.9, beta2=0.999, weight_decay=0.0, slanted_triangle_lr=False, dropout=0.2, part_of_speech='upos', which_cuda=0), <vocabulary.Vocabulary object at 0x7fcbafef46d0>, <vocabulary.Vocabulary object at 0x7fcbaebb5520>, <vocabulary.Vocabulary object at 0x7fcbaebb55b0>, <vocabulary.Vocabulary object at 0x7fcbaebb55e0>, <vocabulary.Vocabulary object at 0x7fcbaebb5640>)
+evaluating parsing results
+  Labeled   attachment score: 14852 / 21992 * 100 = 67.53 %
+  Unlabeled attachment score: 16709 / 21992 * 100 = 75.98 %
+  Label accuracy score:       17546 / 21992 * 100 = 79.78 %
+
+  ================================================================================
+
+  Evaluation of the results in /tmp/tmpcgdc37_r
+  vs. gold standard ../../../githubRepos/parsing-mismatches/data/PerDT/fa_perdt-ud-test-removeLines.conllu:
+
+  Legend: '.S' - the beginning of a sentence, '.E' - the end of a sentence
+
+  Number of non-scoring tokens: 2141
+
+  The overall accuracy and its distribution over CPOSTAGs
+
+  -----------+-------+-------+------+-------+------+-------+-------
+  Accuracy   | words | right |   %  | right |   %  | both  |   %
+             |       | head  |      |  dep  |      | right |
+  -----------+-------+-------+------+-------+------+-------+-------
+  total      | 21992 | 16709 |  76% | 17546 |  80% | 14852 |  68%
+  -----------+-------+-------+------+-------+------+-------+-------
+  NOUN       |  8220 |  6140 |  75% |  5641 |  69% |  4814 |  59%
+  ADP        |  3407 |  3057 |  90% |  3380 |  99% |  3049 |  89%
+  VERB       |  2591 |  1444 |  56% |  1813 |  70% |  1315 |  51%
+  ADJ        |  1652 |  1321 |  80% |  1322 |  80% |  1196 |  72%
+  PRON       |  1126 |   887 |  79% |   937 |  83% |   816 |  72%
+  PROPN      |  1111 |   822 |  74% |   897 |  81% |   715 |  64%
+  CCONJ      |  1026 |   815 |  79% |   997 |  97% |   809 |  79%
+  AUX        |  1004 |   813 |  81% |   926 |  92% |   785 |  78%
+  SCONJ      |   632 |   390 |  62% |   520 |  82% |   376 |  59%
+  DET        |   491 |   482 |  98% |   478 |  97% |   473 |  96%
+  ADV        |   384 |   257 |  67% |   330 |  86% |   233 |  61%
+  NUM        |   293 |   250 |  85% |   269 |  92% |   245 |  84%
+  PART       |    28 |    18 |  64% |    24 |  86% |    18 |  64%
+  INTJ       |    27 |    13 |  48% |    12 |  44% |     8 |  30%
+  -----------+-------+-------+------+-------+------+-------+-------
+
+
+  The overall error rate and its distribution over CPOSTAGs
+
+  -----------+-------+-------+------+-------+------+-------+-------
+  Error      | words | head  |   %  |  dep  |   %  | both  |   %
+  Rate       |       | err   |      |  err  |      | wrong |
+  -----------+-------+-------+------+-------+------+-------+-------
+  total      | 21992 |  5283 |  24% |  4446 |  20% |  2589 |  12%
+  -----------+-------+-------+------+-------+------+-------+-------
+  NOUN       |  8220 |  2080 |  25% |  2579 |  31% |  1253 |  15%
+  ADP        |  3407 |   350 |  10% |    27 |   1% |    19 |   1%
+  VERB       |  2591 |  1147 |  44% |   778 |  30% |   649 |  25%
+  ADJ        |  1652 |   331 |  20% |   330 |  20% |   205 |  12%
+  PRON       |  1126 |   239 |  21% |   189 |  17% |   118 |  10%
+  PROPN      |  1111 |   289 |  26% |   214 |  19% |   107 |  10%
+  CCONJ      |  1026 |   211 |  21% |    29 |   3% |    23 |   2%
+  AUX        |  1004 |   191 |  19% |    78 |   8% |    50 |   5%
+  SCONJ      |   632 |   242 |  38% |   112 |  18% |    98 |  16%
+  DET        |   491 |     9 |   2% |    13 |   3% |     4 |   1%
+  ADV        |   384 |   127 |  33% |    54 |  14% |    30 |   8%
+  NUM        |   293 |    43 |  15% |    24 |   8% |    19 |   6%
+  PART       |    28 |    10 |  36% |     4 |  14% |     4 |  14%
+  INTJ       |    27 |    14 |  52% |    15 |  56% |    10 |  37%
+  -----------+-------+-------+------+-------+------+-------+-------
+
+
+  Precision and recall of DEPREL
+
+  ----------------+------+---------+--------+------------+---------------
+  deprel          | gold | correct | system | recall (%) | precision (%) 
+  ----------------+------+---------+--------+------------+---------------
+  acl             |  508 |     259 |    441 |      50.98 |         58.73
+  advcl           |  178 |       7 |     86 |       3.93 |          8.14
+  advmod          |  427 |     348 |    439 |      81.50 |         79.27
+  amod            | 1051 |     952 |   1115 |      90.58 |         85.38
+  appos           |   47 |      11 |     62 |      23.40 |         17.74
+  aux             |  670 |     657 |    683 |      98.06 |         96.19
+  aux:pass        |   38 |      24 |     29 |      63.16 |         82.76
+  case            | 3412 |    3385 |   3412 |      99.21 |         99.21
+  cc              | 1000 |     994 |   1021 |      99.40 |         97.36
+  ccomp           |  304 |     136 |    366 |      44.74 |         37.16
+  compound        |    2 |       0 |      0 |       0.00 |           NaN
+  compound:lvc    | 1841 |    1548 |   1823 |      84.08 |         84.91
+  conj            | 1095 |     764 |    989 |      69.77 |         77.25
+  cop             |  268 |     244 |    270 |      91.04 |         90.37
+  csubj           |   30 |       0 |     12 |       0.00 |          0.00
+  dep             |   97 |      66 |     77 |      68.04 |         85.71
+  det             |  482 |     478 |    487 |      99.17 |         98.15
+  fixed           |    6 |       0 |      1 |       0.00 |          0.00
+  flat:name       |  355 |     332 |    361 |      93.52 |         91.97
+  flat:num        |   18 |       6 |      7 |      33.33 |         85.71
+  goeswith        |    1 |       0 |      0 |       0.00 |           NaN
+  mark            |  569 |     535 |    615 |      94.02 |         86.99
+  nmod            | 2751 |    2180 |   2922 |      79.24 |         74.61
+  nsubj           | 1386 |    1077 |   1394 |      77.71 |         77.26
+  nsubj:pass      |   20 |       0 |      4 |       0.00 |          0.00
+  nummod          |  270 |     263 |    278 |      97.41 |         94.60
+  obj             |  945 |     536 |    904 |      56.72 |         59.29
+  obl             | 1496 |     925 |   1527 |      61.83 |         60.58
+  obl:arg         | 1028 |     524 |   1057 |      50.97 |         49.57
+  parataxis       |    3 |       0 |      4 |       0.00 |          0.00
+  punct           |    0 |       0 |      7 |        NaN |          0.00
+  root            | 1455 |    1178 |   1385 |      80.96 |         85.05
+  rroot           |    0 |       0 |      4 |        NaN |          0.00
+  vocative        |    5 |       0 |      0 |       0.00 |           NaN
+  xcomp           |  234 |     117 |    210 |      50.00 |         55.71
+
+
+  Precision and recall of DEPREL + ATTACHMENT
+
+  ----------------+------+---------+--------+------------+---------------
+  deprel          | gold | correct | system | recall (%) | precision (%) 
+  ----------------+------+---------+--------+------------+---------------
+  acl             |  508 |      71 |    441 |      13.98 |         16.10
+  advcl           |  178 |       2 |     86 |       1.12 |          2.33
+  advmod          |  427 |     251 |    439 |      58.78 |         57.18
+  amod            | 1051 |     861 |   1115 |      81.92 |         77.22
+  appos           |   47 |       5 |     62 |      10.64 |          8.06
+  aux             |  670 |     630 |    683 |      94.03 |         92.24
+  aux:pass        |   38 |      24 |     29 |      63.16 |         82.76
+  case            | 3412 |    3053 |   3412 |      89.48 |         89.48
+  cc              | 1000 |     807 |   1021 |      80.70 |         79.04
+  ccomp           |  304 |      55 |    366 |      18.09 |         15.03
+  compound        |    2 |       0 |      0 |       0.00 |           NaN
+  compound:lvc    | 1841 |    1532 |   1823 |      83.22 |         84.04
+  conj            | 1095 |     440 |    989 |      40.18 |         44.49
+  cop             |  268 |     130 |    270 |      48.51 |         48.15
+  csubj           |   30 |       0 |     12 |       0.00 |          0.00
+  dep             |   97 |      51 |     77 |      52.58 |         66.23
+  det             |  482 |     473 |    487 |      98.13 |         97.13
+  fixed           |    6 |       0 |      1 |       0.00 |          0.00
+  flat:name       |  355 |     266 |    361 |      74.93 |         73.68
+  flat:num        |   18 |       5 |      7 |      27.78 |         71.43
+  goeswith        |    1 |       0 |      0 |       0.00 |           NaN
+  mark            |  569 |     390 |    615 |      68.54 |         63.41
+  nmod            | 2751 |    1936 |   2922 |      70.37 |         66.26
+  nsubj           | 1386 |     801 |   1394 |      57.79 |         57.46
+  nsubj:pass      |   20 |       0 |      4 |       0.00 |          0.00
+  nummod          |  270 |     240 |    278 |      88.89 |         86.33
+  obj             |  945 |     462 |    904 |      48.89 |         51.11
+  obl             | 1496 |     671 |   1527 |      44.85 |         43.94
+  obl:arg         | 1028 |     421 |   1057 |      40.95 |         39.83
+  parataxis       |    3 |       0 |      4 |       0.00 |          0.00
+  punct           |    0 |       0 |      7 |        NaN |          0.00
+  root            | 1455 |    1164 |   1385 |      80.00 |         84.04
+  rroot           |    0 |       0 |      4 |        NaN |          0.00
+  vocative        |    5 |       0 |      0 |       0.00 |           NaN
+  xcomp           |  234 |     111 |    210 |      47.44 |         52.86
+
+
+  Precision and recall of binned HEAD direction
+
+  ----------------+------+---------+--------+------------+---------------
+  direction       | gold | correct | system | recall (%) | precision (%) 
+  ----------------+------+---------+--------+------------+---------------
+  to_root         | 1455 |    1215 |   1521 |      83.51 |         79.88
+  left            | 7864 |    6725 |   7841 |      85.52 |         85.77
+  right           | 12673 |   11667 |  12630 |      92.06 |         92.38
+  self            |    0 |       0 |      0 |        NaN |           NaN
+
+
+  Precision and recall of binned HEAD distance
+
+  ----------------+------+---------+--------+------------+---------------
+  distance        | gold | correct | system | recall (%) | precision (%) 
+  ----------------+------+---------+--------+------------+---------------
+  to_root         | 1455 |    1215 |   1521 |      83.51 |         79.88
+  1               | 10146 |    9399 |  10389 |      92.64 |         90.47
+  2               | 3068 |    2363 |   3158 |      77.02 |         74.83
+  3-6             | 4186 |    3124 |   4070 |      74.63 |         76.76
+  7-...           | 3137 |    2296 |   2854 |      73.19 |         80.45
+
+
+  Frame confusions (gold versus system; *...* marks the head token)
+
+  116  *nmod* / *nmod* nmod 
+   94  ** root / ** 
+   61  ** root / ** root root 
+   55  *nmod* nmod / *nmod* 
+   55  *obj* case / *obj* 
+   51  *nsubj* / *nsubj* nmod 
+   50  / obl 
+   45  / nsubj 
+   43  *obj* nmod case / *obj* nmod 
+   42  case *obl* nmod / case *obl* 
+   41  *case* / *case* conj 
+   41  *amod* / *amod* nmod 
+   38  *mark* / *mark* acl 
+   34  cc *conj* / *conj* 
+   34  case *obl* / case *obl* nmod 
+   33  cc *conj* / cc *conj* nmod 
+   32  *obl* acl / *obl* 
+   32  *acl* acl / *acl* 
+   31  *nmod* / *nmod* amod 
+   30  obl:arg *xcomp* / *xcomp* 
+   29  *case* / *case* acl 
+   29  *nmod* / *nmod* case 
+   29  case *obl* acl / case *obl* 
+   28  nmod *obj* / *obj* 
+   28  *cc* / *cc* conj 
+   27  cc *conj* nmod / cc *conj* 
+   26  *nmod* / *nmod* conj 
+   25  *nsubj* nmod / *nsubj* 
+   24  *compound:lvc* / *compound:lvc* conj 
+   23  *compound:lvc* / *compound:lvc* ccomp 
+   23  *compound:lvc* / nsubj *compound:lvc* 
+   22  *compound:lvc* conj / *compound:lvc* 
+   21  *mark* / *mark* ccomp 
+   21  *nmod* acl / *nmod* 
+   21  ** root / ** acl 
+   20  *case* / *case* ccomp 
+   20  *aux* / obl *aux* 
+   19  / conj 
+   18  *nsubj* acl / *nsubj* 
+   17  *obj* nmod case / *obj* 
+   17  *nmod* nmod / *nmod* nmod case 
+   16  ** root / ** acl root 
+   16  case *nmod* / case *nmod* nmod 
+   16  *compound:lvc* nmod / *compound:lvc* 
+   16  ** root / ** conj 
+   15  / mark 
+   15  case *obl:arg* nmod / case *obl:arg* 
+   15  *advcl* advcl / *advcl* 
+   15  / cc 
+   15  *amod* / *amod* conj 
+   15  *amod* obl:arg / *amod* 
+   14  case *obl:arg* acl / case *obl:arg* 
+   14  *nmod* amod nmod / *nmod* amod 
+   13  *amod* / *amod* case 
+   13  *case* / nsubj *case* 
+   13  *nsubj* amod nmod / *nsubj* amod 
+   13  *mark* / *mark* conj 
+   13  *compound:lvc* / obl *compound:lvc* 
+   13  *nmod* flat:name / *nmod* 
+   13  *nsubj* / *nsubj* nmod case 
+   13  *amod* / *amod* acl 
+   13  *flat:name* / *flat:name* flat:name 
+   13  det *obl* acl / det *obl* 
+   12  cc *conj* / cc *conj* amod 
+   12  case *obl:arg* / case *obl:arg* nmod 
+   12  *advmod* obl:arg / *advmod* 
+   12  nsubj *root* ccomp / nsubj *root* 
+   12  *compound:lvc* / *compound:lvc* acl 
+   11  *root* ccomp / *root* 
+   11  det *nsubj* acl / det *nsubj* 
+   11  *cc* / *cc* ccomp 
+   11  *nmod* nmod nmod / *nmod* nmod 
+   11  *obj* nmod / *obj* 
+   11  ** root / ** nsubj root 
+   10  *obl* / *obl* nmod 
+   10  case *obl:arg* / case *obl:arg* conj 
+   10  *amod* / *amod* amod 
+   10  nsubj obl:arg compound:lvc *root* / nsubj obl compound:lvc *root* 
+   10  *nmod* / *nmod* cop 
+   10  *nsubj* nmod nmod / *nsubj* nmod 
+   10  ** root / ** root conj 
+   10  case *obl* nmod / case *obl* obl:arg 
+   10  *xcomp* obl:arg / *xcomp* 
+    9  *cc* / nsubj *cc* 
+    9  *cop* / *cop* ccomp 
+    9  *det* / *det* acl 
+    9  nmod *nmod* / *nmod* 
+    9  case *obl* amod / case *obl* amod nmod 
+    9  *aux* / *aux* conj 
+    9  *cop* / nsubj *cop* 
+    9  *advmod* / *advmod* amod 
+    9  *obj* amod nmod case / *obj* amod 
+    9  *obl* nmod / *obl* 
+    9  *nsubj* / *nsubj* conj 
+    9  case *nmod* nmod / case *nmod* 
+    9  *cop* / *cop* acl 
+    9  *csubj* ccomp / *csubj* 
+    8  *xcomp* ccomp / *xcomp* 
+    8  / ccomp 
+    8  *nsubj* / *nsubj* amod 
+    8  *aux* / obj *aux* 
+    8  case *obl* amod nmod / case *obl* amod 
+    8  *aux* / nsubj *aux* 
+    8  *nmod* / *nmod* nmod case 
+    8  *nmod* / *nmod* acl 
+    8  *nmod* amod / *nmod* 
+    7  ** root / ** nsubj 
+    7  case *nmod* nmod / case *nmod* nmod case 
+    7  *nmod* amod / *nmod* amod case 
+    7  *obl* obl / *obl* nmod 
+    7  *case* / *case* nmod 
+    7  *nsubj* amod / *nsubj* amod nmod 
+    7  ** root / ** root ccomp 
+    7  *nsubj* flat:name / *nsubj* 
+    7  ** root / ** nmod 
+    7  case *obl* / case *obl* obl:arg 
+    7  *advmod* / *advmod* conj 
+    7  *obj* case acl / *obj* case 
+    7  case *obl* nmod / case *obl* obl 
+    7  case *obl:arg* amod nmod / case *obl:arg* amod 
+    7  *nsubj* / *nsubj* obl 
+    7  case *nmod* / case *nmod* conj 
+    7  case *obl* nmod / case *obl* nmod nmod 
+    7  cc *conj* amod / cc *conj* 
+    7  ** root / ** root acl 
+    7  nsubj obl compound:lvc *root* / nsubj obl:arg compound:lvc *root* 
+    7  *ccomp* ccomp / *ccomp* 
+    6  *nmod* conj / *nmod* 
+    6  *obl* obl / *obl* 
+    6  *flat:name* / *flat:name* ccomp 
+    6  case *obl:arg* nmod / case *obl:arg* obl:arg 
+    6  *obj* amod case / *obj* amod 
+    6  *nsubj* nmod / *nsubj* nmod nmod 
+    6  *nsubj* / *nsubj* ccomp 
+    6  *obj* acl / *obj* 
+    6  *amod* / *amod* obl:arg 
+    6  *case* / obl *case* 
+    6  *advmod* / case *advmod* 
+    6  *cop* / *cop* conj 
+    6  case *nmod* / case *nmod* case 
+    6  case *obl* / case *obl* nmod case 
+    6  *nsubj* / *nsubj* acl 
+    6  case *obl:arg* nmod nmod / case *obl:arg* nmod 
+    6  / obj 
+    6  cc *conj* obl:arg / cc *conj* 
+    6  *nmod* / *nmod* obl 
+    6  case *obl* nmod nmod / case *obl* nmod 
+    6  mark *advcl* ccomp / mark *advcl* 
+    6  *nmod* amod / *nmod* amod nmod 
+    6  case *obl* amod / case *obl* 
+    5  *advmod* case nmod / *advmod* 
+    5  *amod* / obl:arg *amod* 
+    5  case *nmod* amod nmod / case *nmod* amod 
+    5  *nmod* / *nmod* obl:arg 
+    5  nummod *nmod* / nummod *nmod* nmod 
+    5  *nsubj* amod / *nsubj* 
+    5  ** root / ** nmod root 
+    5  *nsubj* conj nmod / *nsubj* conj 
+    5  *nmod* / obl *nmod* 
+    5  / obl:arg 
+    5  *compound:lvc* / mark *compound:lvc* 
+    5  cc obj *conj* / cc compound:lvc *conj* 
+    5  *compound:lvc* / case *compound:lvc* 
+    5  *obj* amod / *obj* 
+    5  *nsubj* nmod / *nsubj* nmod cop 
+    5  *conj* / *conj* conj 
+    5  ** root / ** advcl 
+    5  obl:arg compound:lvc *ccomp* / obl compound:lvc *ccomp* 
+    5  *cc* / *cc* acl 
+    5  *flat:name* / *flat:name* nmod 
+    5  nsubj *root* cop acl / *root* 
+    5  *advmod* / *advmod* nmod 
+    5  obl:arg *compound:lvc* / *compound:lvc* 
+    5  det *nmod* acl / det *nmod* 
+    5  *aux* / mark *aux* 
+    5  / nsubj obl 
+    5  *nsubj* / *nsubj* obj case 
+    5  det *nsubj* / det *nsubj* nmod 
+    5  *obj* case / *obj* case conj 
+    5  *amod* / *amod* cop 
+    5  *aux* / *aux* acl 
+    5  *nmod* / *nmod* dep 
+    5  *nmod* nmod / *nmod* nmod nmod 
+    5  *advmod* obl:arg / *advmod* nmod 
+    5  *nummod* flat:num / *nummod* 
+
+
+  5 focus words where most of the errors occur:
+
+              | any  | head | dep  | both
+  ------------+------+------+------+------
+  را / ADP    |  255 |  253 |    3 |    1
+  که / SCONJ  |  198 |  188 |   85 |   75
+  و / CCONJ   |  193 |  191 |   21 |   19
+  کرد / VERB  |   98 |   88 |   59 |   49
+  کرده / VERB |   68 |   57 |   35 |   24
+  ------------+------+------+------+------
+
+
+  one-token preceeding contexts where most of the errors occur:
+
+  CPOS      | any  | head | dep  | both  ||  word                  | any  | head | dep  | both
+  ----------+------+------+------+-------++------------------------+------+------+------+-----
+  NOUN      | 2191 | 1847 | 1312 |  968  ||  در / ADP              |  327 |  166 |  255 |   94
+  ADP       | 1451 |  835 | 1129 |  513  ||  به / ADP              |  316 |  187 |  246 |  117
+  ADJ       |  586 |  488 |  330 |  232  ||  و / CCONJ             |  282 |  207 |  155 |   80
+  ----------+------+------+------+-------++------------------------+------+------+------+-----
+
+
+  two-token preceeding contexts where most of the errors occur:
+
+  CPOS      | any  | head | dep  | both  ||  word                  | any  | head | dep  | both
+  ----------+------+------+------+-------++------------------------+------+------+------+-----
+  NOUN+NOUN |  606 |  539 |  340 |  273  ||  را / ADP + به / ADP   |   39 |   14 |   32 |    7
+  ADP+NOUN  |  497 |  399 |  329 |  231  ||  .S + در / ADP         |   35 |   21 |   19 |    5
+  NOUN+ADP  |  465 |  310 |  374 |  219  ||  را / ADP + در / ADP   |   24 |    4 |   22 |    2
+            |      |      |      |       ||  .S + هر / DET         |   24 |   19 |    9 |    4
+  ----------+------+------+------+-------++------------------------+------+------+------+-----
+
+
+  one-token following contexts where most of the errors occur:
+
+  CPOS      | any  | head | dep  | both  ||  word                  | any  | head | dep  | both
+  ----------+------+------+------+-------++------------------------+------+------+------+-----
+  NOUN      | 1911 | 1378 | 1163 |  630  ||  . / PUNCT             |  541 |  479 |  309 |  247
+  ADP       | 1038 |  832 |  555 |  349  ||  و / CCONJ             |  433 |  339 |  299 |  205
+  PUNCT     |  895 |  750 |  536 |  391  ||  که / SCONJ            |  237 |  220 |  103 |   86
+  ----------+------+------+------+-------++------------------------+------+------+------+-----
+
+
+  two-token following contexts where most of the errors occur:
+
+  CPOS      | any  | head | dep  | both  ||  word                  | any  | head | dep  | both
+  ----------+------+------+------+-------++------------------------+------+------+------+-----
+  ADP+NOUN  |  685 |  560 |  364 |  239  ||  . / PUNCT + .E        |  539 |  477 |  309 |  247
+  PUNCT+.E  |  566 |  502 |  325 |  261  ||  است / AUX + . / PUNCT |   41 |   32 |   24 |   15
+  NOUN+VERB |  507 |  344 |  293 |  130  ||  را / ADP + به / ADP   |   33 |   27 |   15 |    9
+  ----------+------+------+------+-------++------------------------+------+------+------+-----
+
+
+  Sentence with the highest number of word errors:
+   Sentence 33 line 566, 27 head errors, 14 dependency errors, 29 word errors
+
+
+  Sentence with the highest number of head errors:
+   Sentence 33 line 566, 27 head errors, 14 dependency errors, 29 word errors
+
+
+  Sentence with the highest number of dependency errors:
+   Sentence 1159 line 20117, 14 head errors, 18 dependency errors, 22 word errors
+
+
+  Specific errors, 10 most frequent errors:
+  =========================================
+
+   1. head one word after the correct head (before the focus word), correct dependency : 276 times
+  ------+------+-------+------+-------+------+------
+    Before     |    Focus     |   After      | Count
+  CPOS    word | CPOS    word | CPOS    word |
+  ------+------+-------+------+-------+------+------
+  NOUN  |      |       |      |       |      | 118
+        |      | VERB  |      |       |      |  74
+        |      |       |      | NOUN  |      |  74
+  ADJ   |      |       |      |       |      |  65
+  NOUN  |      | VERB  |      |       |      |  57
+        |      | ADP   | را   |       |      |  54
+        |      |       |      | PUNCT |      |  53
+  ------+------+-------+------+-------+------+------
+
+   2. head one word after the correct head (after the focus word), correct dependency : 257 times
+  ------+------+-------+------+-------+------+------
+    Before     |    Focus     |   After      | Count
+  CPOS    word | CPOS    word | CPOS    word |
+  ------+------+-------+------+-------+------+------
+        |      | NOUN  |      |       |      | 129
+        |      |       |      | NOUN  |      |  81
+  .S    | .S   |       |      |       |      |  68
+  ADP   |      |       |      |       |      |  64
+        |      |       |      | ADP   |      |  58
+  ADP   |      | NOUN  |      |       |      |  52
+        |      | CCONJ |      |       |      |  41
+  ------+------+-------+------+-------+------+------
+
+   3. correct head (after the focus word), dependency "obl:arg" instead of "obl" : 219 times
+  ------+------+-------+------+-------+------+------
+    Before     |    Focus     |   After      | Count
+  CPOS    word | CPOS    word | CPOS    word |
+  ------+------+-------+------+-------+------+------
+  ADP   |      |       |      |       |      | 201
+        |      | NOUN  |      |       |      | 179
+  ADP   |      | NOUN  |      |       |      | 161
+        |      |       |      | NOUN  |      | 112
+  ADP   |      |       |      | NOUN  |      | 104
+        |      | NOUN  |      | NOUN  |      |  90
+  ADP   |      | NOUN  |      | NOUN  |      |  82
+  ------+------+-------+------+-------+------+------
+
+   4. correct head (after the focus word), dependency "obl" instead of "obl:arg" : 204 times
+  ------+------+-------+------+-------+------+------
+    Before     |    Focus     |   After      | Count
+  CPOS    word | CPOS    word | CPOS    word |
+  ------+------+-------+------+-------+------+------
+        |      | NOUN  |      |       |      | 182
+  ADP   |      |       |      |       |      | 171
+  ADP   |      | NOUN  |      |       |      | 149
+        |      |       |      | NOUN  |      |  89
+        |      | NOUN  |      | NOUN  |      |  81
+  ADP   |      |       |      | NOUN  |      |  74
+  ADP   |      | NOUN  |      | NOUN  |      |  66
+  ------+------+-------+------+-------+------+------
+
+   5. head one word before the correct head (before the focus word), correct dependency : 204 times
+  ------+------+-------+------+-------+------+------
+    Before     |    Focus     |   After      | Count
+  CPOS    word | CPOS    word | CPOS    word |
+  ------+------+-------+------+-------+------+------
+  NOUN  |      |       |      |       |      |  91
+        |      | VERB  |      |       |      |  85
+  NOUN  |      | VERB  |      |       |      |  62
+        |      |       |      | PUNCT |      |  53
+        |      | ADP   | را   |       |      |  52
+        |      |       |      | NOUN  |      |  47
+        |      | VERB  |      | PUNCT |      |  45
+  ------+------+-------+------+-------+------+------
+
+   6. head two words after the correct head (before the focus word), correct dependency : 178 times
+  ------+------+-------+------+-------+------+------
+    Before     |    Focus     |   After      | Count
+  CPOS    word | CPOS    word | CPOS    word |
+  ------+------+-------+------+-------+------+------
+  NOUN  |      |       |      |       |      | 103
+        |      |       |      | NOUN  |      |  44
+        |      | VERB  |      |       |      |  37
+        |      | NOUN  |      |       |      |  37
+        |      | ADP   | را   |       |      |  35
+        |      |       |      | ADP   |      |  32
+  NOUN  |      | VERB  |      |       |      |  28
+  ------+------+-------+------+-------+------+------
+
+   7. head two words before the correct head (before the focus word), correct dependency : 145 times
+  ------+------+-------+------+-------+------+------
+    Before     |    Focus     |   After      | Count
+  CPOS    word | CPOS    word | CPOS    word |
+  ------+------+-------+------+-------+------+------
+  NOUN  |      |       |      |       |      |  83
+        |      | VERB  |      |       |      |  54
+  NOUN  |      | VERB  |      |       |      |  45
+        |      | ADP   | را   |       |      |  36
+        |      |       |      | PUNCT |      |  36
+        |      |       |      | NOUN  |      |  33
+        |      | VERB  |      | PUNCT |      |  32
+  ------+------+-------+------+-------+------+------
+
+   8. head one word before the correct head (after the focus word), correct dependency : 135 times
+  ------+------+-------+------+-------+------+------
+    Before     |    Focus     |   After      | Count
+  CPOS    word | CPOS    word | CPOS    word |
+  ------+------+-------+------+-------+------+------
+        |      |       |      | NOUN  |      |  45
+        |      | NOUN  |      |       |      |  44
+        |      | ADP   |      |       |      |  43
+  .S    | .S   |       |      |       |      |  33
+        |      |       |      | ADJ   |      |  22
+        |      |       |      | ADP   |      |  21
+  ADP   |      |       |      |       |      |  20
+  ------+------+-------+------+-------+------+------
+
+   9. correct head (after the focus word), dependency "compound:lvc" instead of "obj" : 89 times
+  ------+------+-------+------+-------+------+------
+    Before     |    Focus     |   After      | Count
+  CPOS    word | CPOS    word | CPOS    word |
+  ------+------+-------+------+-------+------+------
+        |      | NOUN  |      |       |      |  88
+        |      |       |      | VERB  |      |  66
+        |      | NOUN  |      | VERB  |      |  65
+  NOUN  |      | NOUN  |      |       |      |  26
+  NOUN  |      | NOUN  |      | VERB  |      |  19
+  PRON  |      | NOUN  |      |       |      |  19
+  PRON  |      | NOUN  |      | VERB  |      |  16
+  ------+------+-------+------+-------+------+------
+
+  10. correct head (after the focus word), dependency "obj" instead of "compound:lvc" : 83 times
+  ------+------+-------+------+-------+------+------
+    Before     |    Focus     |   After      | Count
+  CPOS    word | CPOS    word | CPOS    word |
+  ------+------+-------+------+-------+------+------
+        |      | NOUN  |      |       |      |  82
+        |      |       |      | VERB  |      |  59
+        |      | NOUN  |      | VERB  |      |  58
+  NOUN  |      | NOUN  |      |       |      |  29
+  NOUN  |      | NOUN  |      | VERB  |      |  22
+  PRON  |      |       |      |       |      |  11
+  PRON  |      | NOUN  |      |       |      |  10
+  ------+------+-------+------+-------+------+------
+
+
+  Local contexts involved in several frequent errors:
+  ===================================================
+
+
+  ------+------+-------+------+-------+------
+    Before     |    Focus     |   After      
+  CPOS    word | CPOS    word | CPOS    word 
+  ------+------+-------+------+-------+------
+        |      |       |      | NOUN  |      
+  ------+------+-------+------+-------+------
+   3. correct head (after the focus word), dependency "obl:arg" instead of "obl" : 112 times
+   4. correct head (after the focus word), dependency "obl" instead of "obl:arg" : 89 times
+   2. head one word after the correct head (after the focus word), correct dependency : 81 times
+   1. head one word after the correct head (before the focus word), correct dependency : 74 times
+   5. head one word before the correct head (before the focus word), correct dependency : 47 times
+   8. head one word before the correct head (after the focus word), correct dependency : 45 times
+   6. head two words after the correct head (before the focus word), correct dependency : 44 times
+   7. head two words before the correct head (before the focus word), correct dependency : 33 times
+
+  ------+------+-------+------+-------+------
+    Before     |    Focus     |   After      
+  CPOS    word | CPOS    word | CPOS    word 
+  ------+------+-------+------+-------+------
+        |      | NOUN  |      |       |      
+  ------+------+-------+------+-------+------
+   4. correct head (after the focus word), dependency "obl" instead of "obl:arg" : 182 times
+   3. correct head (after the focus word), dependency "obl:arg" instead of "obl" : 179 times
+   2. head one word after the correct head (after the focus word), correct dependency : 129 times
+   9. correct head (after the focus word), dependency "compound:lvc" instead of "obj" : 88 times
+  10. correct head (after the focus word), dependency "obj" instead of "compound:lvc" : 82 times
+   8. head one word before the correct head (after the focus word), correct dependency : 44 times
+   6. head two words after the correct head (before the focus word), correct dependency : 37 times
+
+  ------+------+-------+------+-------+------
+    Before     |    Focus     |   After      
+  CPOS    word | CPOS    word | CPOS    word 
+  ------+------+-------+------+-------+------
+  NOUN  |      | VERB  |      |       |      
+  ------+------+-------+------+-------+------
+   5. head one word before the correct head (before the focus word), correct dependency : 62 times
+   1. head one word after the correct head (before the focus word), correct dependency : 57 times
+   7. head two words before the correct head (before the focus word), correct dependency : 45 times
+   6. head two words after the correct head (before the focus word), correct dependency : 28 times
+
+  ------+------+-------+------+-------+------
+    Before     |    Focus     |   After      
+  CPOS    word | CPOS    word | CPOS    word 
+  ------+------+-------+------+-------+------
+        |      | VERB  |      |       |      
+  ------+------+-------+------+-------+------
+   5. head one word before the correct head (before the focus word), correct dependency : 85 times
+   1. head one word after the correct head (before the focus word), correct dependency : 74 times
+   7. head two words before the correct head (before the focus word), correct dependency : 54 times
+   6. head two words after the correct head (before the focus word), correct dependency : 37 times
+
+  ------+------+-------+------+-------+------
+    Before     |    Focus     |   After      
+  CPOS    word | CPOS    word | CPOS    word 
+  ------+------+-------+------+-------+------
+  ADP   |      |       |      |       |      
+  ------+------+-------+------+-------+------
+   3. correct head (after the focus word), dependency "obl:arg" instead of "obl" : 201 times
+   4. correct head (after the focus word), dependency "obl" instead of "obl:arg" : 171 times
+   2. head one word after the correct head (after the focus word), correct dependency : 64 times
+   8. head one word before the correct head (after the focus word), correct dependency : 20 times
+
+  ------+------+-------+------+-------+------
+    Before     |    Focus     |   After      
+  CPOS    word | CPOS    word | CPOS    word 
+  ------+------+-------+------+-------+------
+        |      | ADP   | را   |       |      
+  ------+------+-------+------+-------+------
+   1. head one word after the correct head (before the focus word), correct dependency : 54 times
+   5. head one word before the correct head (before the focus word), correct dependency : 52 times
+   7. head two words before the correct head (before the focus word), correct dependency : 36 times
+   6. head two words after the correct head (before the focus word), correct dependency : 35 times
+
+  ------+------+-------+------+-------+------
+    Before     |    Focus     |   After      
+  CPOS    word | CPOS    word | CPOS    word 
+  ------+------+-------+------+-------+------
+  NOUN  |      |       |      |       |      
+  ------+------+-------+------+-------+------
+   1. head one word after the correct head (before the focus word), correct dependency : 118 times
+   6. head two words after the correct head (before the focus word), correct dependency : 103 times
+   5. head one word before the correct head (before the focus word), correct dependency : 91 times
+   7. head two words before the correct head (before the focus word), correct dependency : 83 times
+
+  ------+------+-------+------+-------+------
+    Before     |    Focus     |   After      
+  CPOS    word | CPOS    word | CPOS    word 
+  ------+------+-------+------+-------+------
+  ADP   |      | NOUN  |      |       |      
+  ------+------+-------+------+-------+------
+   3. correct head (after the focus word), dependency "obl:arg" instead of "obl" : 161 times
+   4. correct head (after the focus word), dependency "obl" instead of "obl:arg" : 149 times
+   2. head one word after the correct head (after the focus word), correct dependency : 52 times
+
+  ------+------+-------+------+-------+------
+    Before     |    Focus     |   After      
+  CPOS    word | CPOS    word | CPOS    word 
+  ------+------+-------+------+-------+------
+        |      |       |      | ADP   |      
+  ------+------+-------+------+-------+------
+   2. head one word after the correct head (after the focus word), correct dependency : 58 times
+   6. head two words after the correct head (before the focus word), correct dependency : 32 times
+   8. head one word before the correct head (after the focus word), correct dependency : 21 times
+
+  ------+------+-------+------+-------+------
+    Before     |    Focus     |   After      
+  CPOS    word | CPOS    word | CPOS    word 
+  ------+------+-------+------+-------+------
+        |      |       |      | PUNCT |      
+  ------+------+-------+------+-------+------
+   1. head one word after the correct head (before the focus word), correct dependency : 53 times
+   5. head one word before the correct head (before the focus word), correct dependency : 53 times
+   7. head two words before the correct head (before the focus word), correct dependency : 36 times
+
+  ------+------+-------+------+-------+------
+    Before     |    Focus     |   After      
+  CPOS    word | CPOS    word | CPOS    word 
+  ------+------+-------+------+-------+------
+  ADP   |      |       |      | NOUN  |      
+  ------+------+-------+------+-------+------
+   3. correct head (after the focus word), dependency "obl:arg" instead of "obl" : 104 times
+   4. correct head (after the focus word), dependency "obl" instead of "obl:arg" : 74 times
+
+  ------+------+-------+------+-------+------
+    Before     |    Focus     |   After      
+  CPOS    word | CPOS    word | CPOS    word 
+  ------+------+-------+------+-------+------
+  NOUN  |      | NOUN  |      | VERB  |      
+  ------+------+-------+------+-------+------
+  10. correct head (after the focus word), dependency "obj" instead of "compound:lvc" : 22 times
+   9. correct head (after the focus word), dependency "compound:lvc" instead of "obj" : 19 times
+
+  ------+------+-------+------+-------+------
+    Before     |    Focus     |   After      
+  CPOS    word | CPOS    word | CPOS    word 
+  ------+------+-------+------+-------+------
+  PRON  |      | NOUN  |      |       |      
+  ------+------+-------+------+-------+------
+   9. correct head (after the focus word), dependency "compound:lvc" instead of "obj" : 19 times
+  10. correct head (after the focus word), dependency "obj" instead of "compound:lvc" : 10 times
+
+  ------+------+-------+------+-------+------
+    Before     |    Focus     |   After      
+  CPOS    word | CPOS    word | CPOS    word 
+  ------+------+-------+------+-------+------
+  ADP   |      | NOUN  |      | NOUN  |      
+  ------+------+-------+------+-------+------
+   3. correct head (after the focus word), dependency "obl:arg" instead of "obl" : 82 times
+   4. correct head (after the focus word), dependency "obl" instead of "obl:arg" : 66 times
+
+  ------+------+-------+------+-------+------
+    Before     |    Focus     |   After      
+  CPOS    word | CPOS    word | CPOS    word 
+  ------+------+-------+------+-------+------
+  .S    | .S   |       |      |       |      
+  ------+------+-------+------+-------+------
+   2. head one word after the correct head (after the focus word), correct dependency : 68 times
+   8. head one word before the correct head (after the focus word), correct dependency : 33 times
+
+  ------+------+-------+------+-------+------
+    Before     |    Focus     |   After      
+  CPOS    word | CPOS    word | CPOS    word 
+  ------+------+-------+------+-------+------
+        |      | VERB  |      | PUNCT |      
+  ------+------+-------+------+-------+------
+   5. head one word before the correct head (before the focus word), correct dependency : 45 times
+   7. head two words before the correct head (before the focus word), correct dependency : 32 times
+
+  ------+------+-------+------+-------+------
+    Before     |    Focus     |   After      
+  CPOS    word | CPOS    word | CPOS    word 
+  ------+------+-------+------+-------+------
+        |      | NOUN  |      | NOUN  |      
+  ------+------+-------+------+-------+------
+   3. correct head (after the focus word), dependency "obl:arg" instead of "obl" : 90 times
+   4. correct head (after the focus word), dependency "obl" instead of "obl:arg" : 81 times
+
+  ------+------+-------+------+-------+------
+    Before     |    Focus     |   After      
+  CPOS    word | CPOS    word | CPOS    word 
+  ------+------+-------+------+-------+------
+        |      | NOUN  |      | VERB  |      
+  ------+------+-------+------+-------+------
+   9. correct head (after the focus word), dependency "compound:lvc" instead of "obj" : 65 times
+  10. correct head (after the focus word), dependency "obj" instead of "compound:lvc" : 58 times
+
+  ------+------+-------+------+-------+------
+    Before     |    Focus     |   After      
+  CPOS    word | CPOS    word | CPOS    word 
+  ------+------+-------+------+-------+------
+        |      |       |      | VERB  |      
+  ------+------+-------+------+-------+------
+   9. correct head (after the focus word), dependency "compound:lvc" instead of "obj" : 66 times
+  10. correct head (after the focus word), dependency "obj" instead of "compound:lvc" : 59 times
+
+  ------+------+-------+------+-------+------
+    Before     |    Focus     |   After      
+  CPOS    word | CPOS    word | CPOS    word 
+  ------+------+-------+------+-------+------
+  NOUN  |      | NOUN  |      |       |      
+  ------+------+-------+------+-------+------
+  10. correct head (after the focus word), dependency "obj" instead of "compound:lvc" : 29 times
+   9. correct head (after the focus word), dependency "compound:lvc" instead of "obj" : 26 times
+
+
