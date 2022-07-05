@@ -1,0 +1,104 @@
+Namespace(train='../../../githubRepos/parsing-mismatches/train_data/english_train_A_B-converted-pretrained=GloVe_sents=200_seed=4.conllu', dev='../../../githubRepos/parsing-mismatches/dev_data/english_dev_corpus=A_sents=100_seed=4.txt', output='../../../githubRepos/parsing-mismatches/models/', epochs=100, glove_emb=None, elmo_opts=None, elmo_weights=None, random_seed=1, disable_early_stopping=False, early_stopping_on='uas', max_epochs_without_improvement=5, word_emb_size=100, tag_emb_size=40, bilstm_num_layers=2, bilstm_hidden_size=400, bilstm_dropout=0.1, batch_size=64, mlp_hidden_size=500, mlp_output_size=100, pos_count_threshold=0, pos_hidden_size=100, learning_rate=0.001, char_emb=False, char_emb_hidden_size=25, char_emb_size=50, position_emb=False, position_emb_max_pos=150, position_emb_size=20, bert=False, bert_batch_size=1, bert_layers='-1,-2,-3,-4', bert_store_features=False, bert_load_features=False, bert_hidden_size=768, bert_max_seq_length=512, bert_multilingual_cased=False, polyglot=None, loss_weight_factor=1.0, cnn_ce=False, cnn_embeddings_size=50, cnn_ce_kernel_size=3, cnn_ce_out_channels=50, use_head=False, beta1=0.9, beta2=0.999, weight_decay=0.0, slanted_triangle_lr=False, dropout=0.2, part_of_speech='upos', which_cuda=0)
+
+setting random seed to 1
+
+loading training data from ../../../githubRepos/parsing-mismatches/train_data/english_train_A_B-converted-pretrained=GloVe_sents=200_seed=4.conllu
+200 sentences read.
+7 non-projective sentences found, 0 dropped.
+200 sentences remaining.
+
+loading development data from ../../../githubRepos/parsing-mismatches/dev_data/english_dev_corpus=A_sents=100_seed=4.txt
+100 sentences read.
+8 non-projective sentences found, 0 dropped.
+100 sentences remaining.
+
+making vocabularies
+1,688 distinct words
+21 distinct POS tags
+92 distinct characters
+66 distinct positions with count > 0
+51 distinct dependencies
+
+training
+starting epoch 0
+loss = 8.122018814086914
+loss = 8.071533203125
+loss = 8.031328201293945
+loss = 7.9294538497924805
+--------------------------------------------------
+epoch 0
+  elapsed time: 0 minutes and 4 seconds
+  dev uas: 553 / 1741 * 100 = 31.76 %
+  dev las: 0 / 1741 * 100 = 0.00 %
+current best
+saving ../../../githubRepos/parsing-mismatches/models/pat
+--------------------------------------------------
+starting epoch 1
+loss = 7.7074689865112305
+loss = 7.208172798156738
+loss = 8.036115646362305
+loss = 7.159780502319336
+--------------------------------------------------
+epoch 1
+  elapsed time: 0 minutes and 4 seconds
+  dev uas: 553 / 1741 * 100 = 31.76 %
+  dev las: 3 / 1741 * 100 = 0.17 %
+no improvement for 1 epochs
+--------------------------------------------------
+starting epoch 2
+loss = 6.96921443939209
+loss = 7.096588134765625
+loss = 7.075352668762207
+loss = 6.995977878570557
+--------------------------------------------------
+epoch 2
+  elapsed time: 0 minutes and 4 seconds
+  dev uas: 310 / 1741 * 100 = 17.81 %
+  dev las: 0 / 1741 * 100 = 0.00 %
+no improvement for 2 epochs
+--------------------------------------------------
+starting epoch 3
+loss = 6.806044578552246
+loss = 6.637134075164795
+loss = 6.480414867401123
+loss = 6.198832988739014
+--------------------------------------------------
+epoch 3
+  elapsed time: 0 minutes and 3 seconds
+  dev uas: 302 / 1741 * 100 = 17.35 %
+  dev las: 16 / 1741 * 100 = 0.92 %
+no improvement for 3 epochs
+--------------------------------------------------
+starting epoch 4
+loss = 6.202044486999512
+loss = 6.253423690795898
+loss = 6.199807643890381
+loss = 6.095218658447266
+--------------------------------------------------
+epoch 4
+  elapsed time: 0 minutes and 4 seconds
+  dev uas: 542 / 1741 * 100 = 31.13 %
+  dev las: 60 / 1741 * 100 = 3.45 %
+no improvement for 4 epochs
+--------------------------------------------------
+starting epoch 5
+loss = 5.937246322631836
+loss = 5.917140007019043
+loss = 5.874250411987305
+loss = 5.874009132385254
+--------------------------------------------------
+epoch 5
+  elapsed time: 0 minutes and 4 seconds
+  dev uas: 514 / 1741 * 100 = 29.52 %
+  dev las: 55 / 1741 * 100 = 3.16 %
+no improvement for 5 epochs
+quitting
+--------------------------------------------------
+best model found in epoch 0
+False   3   50   50
+  dev uas and las: 553 / 1741 * 100 = 31.76 % 0 / 1741 * 100 = 0.00 %   uas
+
+
+
+
+

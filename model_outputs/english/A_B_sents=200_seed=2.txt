@@ -1,0 +1,155 @@
+Namespace(train='../../../githubRepos/parsing-mismatches/train_data/en/english_train_A_B_sents=200_seed=2.conllu', dev='../../../githubRepos/parsing-mismatches/dev_data/en/english_dev_corpus=A_sents=100_seed=2.txt', output='../../../githubRepos/parsing-mismatches/models/en/A_B_sents=200_seed=2', epochs=100, glove_emb=None, elmo_opts=None, elmo_weights=None, random_seed=1, disable_early_stopping=False, early_stopping_on='uas', max_epochs_without_improvement=5, word_emb_size=100, tag_emb_size=40, bilstm_num_layers=2, bilstm_hidden_size=400, bilstm_dropout=0.1, batch_size=64, mlp_hidden_size=500, mlp_output_size=100, pos_count_threshold=0, pos_hidden_size=100, learning_rate=0.001, char_emb=False, char_emb_hidden_size=25, char_emb_size=50, position_emb=False, position_emb_max_pos=150, position_emb_size=20, bert=False, bert_batch_size=1, bert_layers='-1,-2,-3,-4', bert_store_features=False, bert_load_features=False, bert_hidden_size=768, bert_max_seq_length=512, bert_multilingual_cased=False, polyglot=None, loss_weight_factor=1.0, cnn_ce=False, cnn_embeddings_size=50, cnn_ce_kernel_size=3, cnn_ce_out_channels=50, use_head=False, beta1=0.9, beta2=0.999, weight_decay=0.0, slanted_triangle_lr=False, dropout=0.2, part_of_speech='upos', which_cuda=0)
+
+setting random seed to 1
+
+loading training data from ../../../githubRepos/parsing-mismatches/train_data/en/english_train_A_B_sents=200_seed=2.conllu
+200 sentences read.
+9 non-projective sentences found, 0 dropped.
+200 sentences remaining.
+
+loading development data from ../../../githubRepos/parsing-mismatches/dev_data/en/english_dev_corpus=A_sents=100_seed=2.txt
+100 sentences read.
+15 non-projective sentences found, 0 dropped.
+100 sentences remaining.
+
+making vocabularies
+1,696 distinct words
+21 distinct POS tags
+94 distinct characters
+65 distinct positions with count > 0
+50 distinct dependencies
+
+training
+starting epoch 0
+loss = 8.098061561584473
+loss = 8.041892051696777
+loss = 7.978464126586914
+loss = 7.814558506011963
+--------------------------------------------------
+epoch 0
+  elapsed time: 0 minutes and 4 seconds
+  dev uas: 526 / 1587 * 100 = 33.14 %
+  dev las: 95 / 1587 * 100 = 5.99 %
+current best
+saving ../../../githubRepos/parsing-mismatches/models/en/A_B_sents=200_seed=2/pat
+--------------------------------------------------
+starting epoch 1
+loss = 7.532503128051758
+loss = 6.9029459953308105
+loss = 8.22968864440918
+loss = 6.552768707275391
+--------------------------------------------------
+epoch 1
+  elapsed time: 0 minutes and 3 seconds
+  dev uas: 530 / 1587 * 100 = 33.40 %
+  dev las: 96 / 1587 * 100 = 6.05 %
+current best
+saving ../../../githubRepos/parsing-mismatches/models/en/A_B_sents=200_seed=2/pat
+--------------------------------------------------
+starting epoch 2
+loss = 6.67682409286499
+loss = 6.843405723571777
+loss = 6.7776570320129395
+loss = 6.580033302307129
+--------------------------------------------------
+epoch 2
+  elapsed time: 0 minutes and 3 seconds
+  dev uas: 528 / 1587 * 100 = 33.27 %
+  dev las: 60 / 1587 * 100 = 3.78 %
+no improvement for 1 epochs
+--------------------------------------------------
+starting epoch 3
+loss = 6.480244159698486
+loss = 6.325778007507324
+loss = 6.175332069396973
+loss = 6.159786224365234
+--------------------------------------------------
+epoch 3
+  elapsed time: 0 minutes and 3 seconds
+  dev uas: 532 / 1587 * 100 = 33.52 %
+  dev las: 35 / 1587 * 100 = 2.21 %
+current best
+saving ../../../githubRepos/parsing-mismatches/models/en/A_B_sents=200_seed=2/pat
+--------------------------------------------------
+starting epoch 4
+loss = 6.050207138061523
+loss = 6.015966892242432
+loss = 5.9651360511779785
+loss = 5.793585777282715
+--------------------------------------------------
+epoch 4
+  elapsed time: 0 minutes and 3 seconds
+  dev uas: 533 / 1587 * 100 = 33.59 %
+  dev las: 83 / 1587 * 100 = 5.23 %
+current best
+saving ../../../githubRepos/parsing-mismatches/models/en/A_B_sents=200_seed=2/pat
+--------------------------------------------------
+starting epoch 5
+loss = 5.844386100769043
+loss = 5.854267597198486
+loss = 5.767545700073242
+loss = 5.86961555480957
+--------------------------------------------------
+epoch 5
+  elapsed time: 0 minutes and 3 seconds
+  dev uas: 528 / 1587 * 100 = 33.27 %
+  dev las: 90 / 1587 * 100 = 5.67 %
+no improvement for 1 epochs
+--------------------------------------------------
+starting epoch 6
+loss = 5.679405212402344
+loss = 5.652451038360596
+loss = 5.705722332000732
+loss = 5.844308853149414
+--------------------------------------------------
+epoch 6
+  elapsed time: 0 minutes and 3 seconds
+  dev uas: 509 / 1587 * 100 = 32.07 %
+  dev las: 84 / 1587 * 100 = 5.29 %
+no improvement for 2 epochs
+--------------------------------------------------
+starting epoch 7
+loss = 5.5760016441345215
+loss = 5.582193374633789
+loss = 5.53352165222168
+loss = 4.943077087402344
+--------------------------------------------------
+epoch 7
+  elapsed time: 0 minutes and 3 seconds
+  dev uas: 502 / 1587 * 100 = 31.63 %
+  dev las: 95 / 1587 * 100 = 5.99 %
+no improvement for 3 epochs
+--------------------------------------------------
+starting epoch 8
+loss = 5.5040998458862305
+loss = 5.390305519104004
+loss = 5.318604469299316
+loss = 5.265012741088867
+--------------------------------------------------
+epoch 8
+  elapsed time: 0 minutes and 3 seconds
+  dev uas: 493 / 1587 * 100 = 31.06 %
+  dev las: 87 / 1587 * 100 = 5.48 %
+no improvement for 4 epochs
+--------------------------------------------------
+starting epoch 9
+loss = 5.297487258911133
+loss = 5.247962951660156
+loss = 5.211318492889404
+loss = 5.314322471618652
+--------------------------------------------------
+epoch 9
+  elapsed time: 0 minutes and 3 seconds
+  dev uas: 501 / 1587 * 100 = 31.57 %
+  dev las: 111 / 1587 * 100 = 6.99 %
+no improvement for 5 epochs
+quitting
+--------------------------------------------------
+best model found in epoch 4
+False   3   50   50
+  dev uas and las: 533 / 1587 * 100 = 33.59 % 83 / 1587 * 100 = 5.23 %   uas
+
+
+
+
+
