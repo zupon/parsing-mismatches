@@ -1,4 +1,5 @@
 # helper functions for getting corpus comparison
+import random
 from collections import Counter
 from tqdm import tqdm
 from pymagnitude import *
@@ -58,6 +59,131 @@ def load_vectors(language):
     else:
         print(f"No vector file found for {language}!")
 
+
+def process_data_for_noise(filename):
+    """
+    Returns all relations for each token type in the data.
+    
+    Returns:
+        all_relations:  List of strings of every dependency relation in the data.
+        token_to_relations:  Dictionary of token to list of all relations occurring with that token.
+    """
+    with open(filename) as infile:
+        file_text = infile.read()
+    sents = file_text.rstrip().split("\n\n")
+    
+    token_to_relations = {}
+    all_relations = []
+    
+    for sent in sents:
+        for line in sent.split("\n"):
+            line = line.split("\t")
+            token = line[1]
+            relation = line[7]
+            all_relations.append(relation)
+            if token in token_to_relations:
+                token_to_relations[token].append(relation)
+            else:
+                token_to_relations[token] = [relation]
+
+    return all_relations, token_to_relations
+
+
+def add_noise_to_data(filename, relation_list, relation_dict, noise_method, outfile):
+    """
+    Adds noise to a conllu file based on the chosen method.
+    
+    Args:
+        filename:  The file to add noise to.
+        relation_list:  A list of all relations found in the original data.
+        relation_dict:  A dictionary of all tokens with their relations in the original data.
+        noise_method:  What method to use to add noise. Currently using either (1) most frequent relation for the given token, or (2) randomly picking a relation from the list.
+    
+    Returns:  Nothing. Writes a new file with the updated, noisy data.
+    """
+    # Some useful counters
+    total = 0  # Total number of lines
+    changed = 0  # Number of lines changed
+    line_id = 0  # Counter for assigning line ids
+    
+    # Open the input file
+    with open(filename) as infile:
+        file_text = infile.read()
+    sents = file_text.rstrip().split("\n\n")
+    
+    # Get total number of contentful lines
+    for sent in sents:
+        for line in sent.split("\n"):
+            total += 1
+    
+    # Get types of relations, to not bias towards more frequent labels.
+    relation_list = list(Counter(relation_list))
+#     print(f"Total number of relations:  {len(relation_list)}.")
+    
+    # Do (some) stuff based on noise_method.
+    if noise_method == "freq":
+        print("Noise method:  replace relation with most frequent relation for that token.")
+    elif type(noise_method) == int:
+        # Randomize the list of line ids, take first n and 
+        # change those lines' relations if noise_method = int
+        noise_targets = [i for i in range(total)]
+        random.shuffle(noise_targets)
+        noise_cutoff = int(total*(noise_method/100))  # How many lines to change
+        print(f"Noise method:  randomly replace {noise_method}% of relations ({noise_cutoff:,} out of {total:,} overall).")
+    elif noise_method == "none":
+        print("No noise will be added to the data! Original data will be output!")
+    else:
+        print("Pick a method for adding noise! Choose 'most_frequent_tag' or enter an integer number to randomly replace that percentage of relations.")
+        return
+    
+    print(f"\nWriting data to '{outfile}'...")
+
+    # Loop through the lines and change relations as needed,
+    # based on the noise_method.
+    with open(outfile, "w") as o:
+        for sent in tqdm(sents):
+            for line in sent.split("\n"):
+                og_line = line
+                line = line.split("\t")
+                line.append(str(line_id))
+                line_id += 1
+                token = line[1]
+                relation = line[7]
+                # If the noise_method is 'freq', use the most frequent relation
+                # for the given token, the first entry in relation_dict[token].
+                if noise_method == "freq":
+                    line[7] = list(relation_dict[token])[0]
+                    if line[7] != relation:
+                        changed += 1
+                # If the noise_method is an int, 
+                elif type(noise_method) == int:
+                    # If our line index is in the first N entries of noise_targets,
+                    # randomly change its relation to something in relation_list.
+                    if int(line[-1]) in noise_targets[:noise_cutoff]:
+                        """ TODO: Do we want to randomly pick a new relation based
+                        # on tokens or types? Should we make a Counter of the full
+                        # relation list, or should we use all the tokens?
+                        # If we do tokens, the changes will reflect the actual
+                        # distribution of relations in the original data. """
+                        random.shuffle(relation_list)
+                        for i in range(0, len(relation_list)):
+                            if line[7] != relation_list[i]:
+                                line[7] = relation_list[i]
+                                break
+#                         line[7] = relation_list[0]
+                        if line[7] != relation:
+                            changed += 1
+                new_line = "\t".join(line[:-1])
+#                 if new_line != og_line:
+#                     print("\nLine changed!")
+#                     print(og_line)
+#                     print(new_line)
+                o.write(new_line)
+                o.write("\n")
+            o.write("\n")
+            
+    print(f"\n{changed:,} lines changed out of {total:,} total lines ({(changed/total)*100}%)")
+        
         
 def process_training_data(filename):
     with open(filename) as infile:
@@ -504,6 +630,382 @@ def get_conversions_pretrained(mismatches, sentences, this_data, other_data, vec
     return conversion_dict
 
 
+def load_dictionary(dictionary_file):
+    dictionary = {}
+    with open(dictionary_file) as f:
+        bilingual_dictionary = f.readlines()
+    for item in bilingual_dictionary:
+        item = item.strip().split("\t")
+        if item[0] in dictionary:
+            dictionary[item[0]].append(item[1])
+        else:
+            dictionary[item[0]] = [item[1]]
+    return dictionary
+
+
+def topn_by_word(word, vectors, n):
+    return [x[0] for x in vectors.most_similar(word, topn=n)]
+
+
+def get_new_pairs(head_replacements, dependent_replacements, other_data):
+    new_pairs = []
+    for head in head_replacements:
+        for dependent in dependent_replacements:
+            if (head, dependent) in list(other_data.keys()):
+                new_pairs.append((head,dependent))
+    return new_pairs
+
+
+def get_replacements_from_dict(dictionary, word):
+    if word in dictionary:
+        replacements = dictionary[word]
+    else:
+        replacements = []
+    return replacements
+
+
+def get_replacements_from_dict_and_vectors(dictionary, word, vectors):
+    if word in dictionary:
+        replacements = dictionary[word]
+        for entry in dictionary[word]:
+            replacements = replacements+[x[0] for x in vectors.most_similar(entry, topn=10)]
+    else:
+        replacements = []
+    return replacements
+
+
+def get_conversions_bilingual_dict(sentences, this_data, other_data, dictionary_file):
+    """
+    Generates conversion table for this_data into that_data using pretrained word embeddings.
+    
+    Args:
+        mismatches: the dictionary of word pairs with a relation in one file but not the other
+        
+        sentences: the dictionary of word pairs, their relations, and the sentences they're found in
+    """
+    dictionary = load_dictionary(dictionary_file)
+    
+    conversion_dict = {}
+    
+    original_pairs = 0
+    changed_pairs = 0
+    changed_relations = 0
+    
+    for pair in tqdm(list(this_data.keys())):
+        original_pairs += 1
+        head_word = pair[0]
+        dependent_word = pair[1]
+
+        head_word_replacements = get_replacements_from_dict(dictionary, head_word)
+        dependent_word_replacements = get_replacements_from_dict(dictionary, dependent_word)
+        
+#         print(f"\nhead_word_replacements:\t{len(head_word_replacements)}")
+#         print(head_word_replacements)
+#         print(f"dependent_word_replacements:\t{len(dependent_word_replacements)}")
+#         print(dependent_word_replacements)
+        
+        new_pairs = get_new_pairs(list(set(head_word_replacements)),
+                                  list(set(dependent_word_replacements)),
+                                  other_data)
+        changed_pairs += len(new_pairs)
+#         print(f"new pairs:\t{len(new_pairs)}")
+        
+        # relations for this pair in this corpus
+        these_relations = Counter(this_data[pair])
+        # relations for new pairs in other corpus
+        new_relations = sum([Counter(other_data[new_pair]) for new_pair in new_pairs], Counter())
+        
+        key = (head_word, dependent_word)
+        value = new_relations
+        conversion_dict[key] = value
+        
+              
+#         for relation in list(set(this_data[pair])):
+#             total_relations += 1
+#             if relation not in new_relations and len(new_relations) > 0:
+#                 changed_relations += 1
+                
+    print(f"Original word pairs:\t{original_pairs}")
+    print(f"New word pairs:\t{changed_pairs}")
+#     print(f"Changed relations:\t{changed_relations} ({100*changed_relations/total_relations}%)")
+    return conversion_dict
+
+
+def get_conversions_bilingual_vectors(sentences, this_data, other_data, vector_file_this, vector_file_that):
+    """
+    Generates conversion table for this_data into that_data using pretrained word embeddings.
+    
+    Args:
+        mismatches: the dictionary of word pairs with a relation in one file but not the other
+        
+        sentences: the dictionary of word pairs, their relations, and the sentences they're found in
+    """
+    vectors_this = Magnitude(vector_file_this)
+    vectors_that = Magnitude(vector_file_that)
+    
+    conversion_dict = {}
+    
+    original_pairs = 0
+    changed_pairs = 0
+    changed_relations = 0
+    
+    for pair in tqdm(list(this_data.keys())):
+        original_pairs += 1
+        head_word = pair[0]
+        dependent_word = pair[1]
+
+#         print(f"Top 10 most similar to head word '{head_word}':")
+#         print(vectors_this.most_similar(head_word, topn=10))
+#         print(f"Top 10 most similar to dependent word'{dependent_word}':")
+#         print(vectors_this.most_similar(dependent_word, topn=10))
+        
+#         print(f"Top 10 most similar in other vectors to head word '{head_word}':")
+#         print(vectors_that.most_similar(vectors_this.query(head_word), topn=10))
+#         print(f"Top 10 most similar in other vectors to dependent word'{dependent_word}':")
+#         print(vectors_that.most_similar(vectors_this.query(dependent_word), topn=10))
+        
+        head_word_replacements = [x[0] for x in vectors_that.most_similar(vectors_this.query(head_word), topn=10)]
+        dependent_word_replacements = [x[0] for x in vectors_that.most_similar(vectors_this.query(dependent_word), topn=10)]
+        
+#         print(f"\nhead_word_replacements:\t{len(head_word_replacements)}")
+#         print(head_word_replacements)
+#         print(f"dependent_word_replacements:\t{len(dependent_word_replacements)}")
+#         print(dependent_word_replacements)
+        
+        new_pairs = get_new_pairs(set(head_word_replacements),
+                                  set(dependent_word_replacements),
+                                  other_data)
+        changed_pairs += len(new_pairs)
+#         print(f"new pairs:\t{len(new_pairs)}")
+        
+        # relations for this pair in this corpus
+        these_relations = Counter(this_data[pair])
+        # relations for new pairs in other corpus
+        new_relations = sum([Counter(other_data[new_pair]) for new_pair in new_pairs], Counter())
+        
+        key = (head_word, dependent_word)
+        value = new_relations
+        conversion_dict[key] = value
+        
+              
+#         for relation in list(set(this_data[pair])):
+#             total_relations += 1
+#             if relation not in new_relations and len(new_relations) > 0:
+#                 changed_relations += 1
+
+    print(f"Original word pairs:\t{original_pairs}")
+    print(f"New word pairs:\t{changed_pairs}")
+#     print(f"Changed relations:\t{changed_relations} ({100*changed_relations/total_relations}%)")
+    return conversion_dict
+
+
+def get_conversions_bilingual_dict_vectors(sentences, this_data, other_data, vector_file_this, vector_file_that, dictionary_file):
+    """
+    Generates conversion table for this_data into that_data using pretrained word embeddings.
+    
+    Args:
+        mismatches: the dictionary of word pairs with a relation in one file but not the other
+        
+        sentences: the dictionary of word pairs, their relations, and the sentences they're found in
+    """
+    dictionary = load_dictionary(dictionary_file)
+            
+    vectors_this = Magnitude(vector_file_this)
+    vectors_that = Magnitude(vector_file_that)
+    
+    conversion_dict = {}
+    
+    original_pairs = 0
+    changed_pairs = 0
+    changed_relations = 0
+    
+    for pair in tqdm(list(this_data.keys())):
+        original_pairs += 1
+        head_word = pair[0]
+        dependent_word = pair[1]
+        
+        # First populate replacement lists using dictionary, then use vectors to augment the list of replacements
+        head_word_replacements = get_replacements_from_dict_and_vectors(dictionary, head_word, vectors_that)
+        dependent_word_replacements = get_replacements_from_dict_and_vectors(dictionary, dependent_word, vectors_that)
+        
+#         print(f"\nhead_word_replacements:\t{len(head_word_replacements)}")
+#         print(head_word_replacements)
+#         print(f"dependent_word_replacements:\t{len(dependent_word_replacements)}")
+#         print(dependent_word_replacements)
+        
+        new_pairs = get_new_pairs(list(set(head_word_replacements)),
+                                  list(set(dependent_word_replacements)),
+                                  other_data)
+        changed_pairs += len(new_pairs)
+#         print(f"new pairs:\t{len(new_pairs)}")
+            
+        # relations for this pair in this corpus
+        these_relations = Counter(this_data[pair])
+        # relations for new pairs in other corpus
+        new_relations = sum([Counter(other_data[new_pair]) for new_pair in new_pairs], Counter())
+
+        key = (head_word, dependent_word)
+        value = new_relations
+        conversion_dict[key] = value
+        
+              
+#         for relation in list(set(this_data[pair])):
+#             total_relations += 1
+#             if relation not in new_relations and len(new_relations) > 0:
+#                 changed_relations += 1
+                
+    print(f"Original word pairs:\t{original_pairs}")
+    print(f"New word pairs:\t{changed_pairs}")
+#     print(f"Changed relations:\t{changed_relations} ({100*changed_relations/total_relations}%)")
+    return conversion_dict 
+
+
+def get_conversions_bilingual_vectors_dict(sentences, this_data, other_data, vector_file_this, vector_file_that, dictionary_file):
+    """
+    Generates conversion table for this_data into that_data using pretrained word embeddings.
+    
+    Args:
+        mismatches: the dictionary of word pairs with a relation in one file but not the other
+        
+        sentences: the dictionary of word pairs, their relations, and the sentences they're found in
+    """
+    dictionary = load_dictionary(dictionary_file)
+            
+    vectors_this = Magnitude(vector_file_this)
+    vectors_that = Magnitude(vector_file_that)
+    
+    conversion_dict = {}
+    
+    original_pairs = 0
+    changed_pairs = 0
+    changed_relations = 0
+    
+    for pair in tqdm(list(this_data.keys())):
+        original_pairs += 1
+        head_word = pair[0]
+        dependent_word = pair[1]
+        
+        head_expanded = topn_by_word(head_word, vectors_this, 10)
+        head_word_replacements = []
+        for entry in head_expanded:
+            head_word_replacements = head_word_replacements + get_replacements_from_dict(dictionary, entry)
+            
+        dependent_expanded = topn_by_word(dependent_word, vectors_this, 10)
+        dependent_word_replacements = []
+        for entry in dependent_expanded:
+            dependent_word_replacements = dependent_word_replacements + get_replacements_from_dict(dictionary, entry)
+        
+        new_pairs = get_new_pairs(list(set(head_word_replacements)),
+                                  list(set(dependent_word_replacements)),
+                                  other_data)
+        changed_pairs += len(new_pairs)
+#         print(f"new pairs:\t{len(new_pairs)}")
+            
+        # relations for this pair in this corpus
+        these_relations = Counter(this_data[pair])
+        # relations for new pairs in other corpus
+        new_relations = sum([Counter(other_data[new_pair]) for new_pair in new_pairs], Counter())
+
+        key = (head_word, dependent_word)
+        value = new_relations
+        conversion_dict[key] = value
+        
+              
+#         for relation in list(set(this_data[pair])):
+#             total_relations += 1
+#             if relation not in new_relations and len(new_relations) > 0:
+#                 changed_relations += 1
+                
+    print(f"Original word pairs:\t{original_pairs}")
+    print(f"New word pairs:\t{changed_pairs}")
+#     print(f"Changed relations:\t{changed_relations} ({100*changed_relations/total_relations}%)")
+    return conversion_dict
+
+
+## NOT USED!
+def get_conversions_bilingual_vectors_vectors(sentences, this_data, other_data, vector_file_this, vector_file_that):
+    """
+    Generates conversion table for this_data into that_data using pretrained word embeddings.
+    
+    Args:
+        mismatches: the dictionary of word pairs with a relation in one file but not the other
+        
+        sentences: the dictionary of word pairs, their relations, and the sentences they're found in
+    """
+    vectors_this = Magnitude(vector_file_this)
+    vectors_that = Magnitude(vector_file_that)
+    
+    conversion_dict = {}
+    
+    original_pairs = 0
+    changed_pairs = 0
+    total_relations = 0
+    changed_relations = 0
+    
+    for pair in tqdm(list(this_data.keys())[:200]):
+        original_pairs += 1
+        head_word = pair[0]
+        dependent_word = pair[1]
+
+#         print(f"Top 10 most similar to head word '{head_word}':")
+#         print(vectors_this.most_similar(head_word, topn=10))
+#         print(f"Top 10 most similar to dependent word'{dependent_word}':")
+#         print(vectors_this.most_similar(dependent_word, topn=10))
+        
+#         print(f"Top 10 most similar in other vectors to head word '{head_word}':")
+#         print(vectors_that.most_similar(vectors_this.query(head_word), topn=10))
+#         print(f"Top 10 most similar in other vectors to dependent word'{dependent_word}':")
+#         print(vectors_that.most_similar(vectors_this.query(dependent_word), topn=10))
+
+        head_expanded = topn_by_word(head_word, vectors_this, 10)
+    
+        head_word_replacements = []
+        
+        for entry in head_expanded:
+            topn = vectors_that.most_similar(vectors_this.query(entry), topn=10)
+            head_word_replacements = head_word_replacements + [x[0] for x in topn]
+            
+        dependent_expanded = topn_by_word(dependent_word, vectors_this, 10)
+        
+        dependent_word_replacements = []
+        
+        for entry in dependent_expanded:
+            topn = vectors_that.most_similar(vectors_this.query(entry), topn=10)
+            dependent_word_replacements = dependent_word_replacements + [x[0] for x in topn]
+        
+#         print(f"\nhead_word_replacements:\t{len(head_word_replacements)}")
+#         print(head_word_replacements)
+#         print(f"dependent_word_replacements:\t{len(dependent_word_replacements)}")
+#         print(dependent_word_replacements)
+        
+        new_pairs = get_new_pairs(list(set(head_word_replacements)),
+                                  list(set(dependent_word_replacements)),
+                                  other_data)
+        changed_pairs += len(new_pairs)
+#         print(f"new pairs:\t{len(new_pairs)}")
+        
+        # relations for this pair in this corpus
+        these_relations = Counter(this_data[pair])
+        # relations for new pairs in other corpus
+        new_relations = sum([Counter(other_data[new_pair]) for new_pair in new_pairs], Counter())
+        
+        key = (head_word, dependent_word)
+        value = new_relations
+        conversion_dict[key] = value
+        
+              
+#         for relation in list(set(this_data[pair])):
+#             total_relations += 1
+#             if relation not in new_relations and len(new_relations) > 0:
+#                 changed_relations += 1
+                
+    print(f"Original word pairs:\t{original_pairs}")
+    print(f"New word pairs:\t{changed_pairs}")
+    print(f"Total relations:\t{total_relations}")
+#     print(f"Changed relations:\t{changed_relations} ({100*changed_relations/total_relations}%)")
+    return conversion_dict
+
+
 def apply_conversions(input_file, output_file, conversion_dictionary):
     with open(input_file) as infile:
         lines = infile.readlines()
@@ -543,6 +1045,54 @@ def apply_conversions(input_file, output_file, conversion_dictionary):
                 outfile.write("\t".join(sent))
             outfile.write("\n")
 
+            
+def apply_conversions_bilingual(input_file, output_file, conversion_dictionary):
+    total_lines = 0
+    changed = 0
+    with open(input_file) as infile:
+        lines = infile.readlines()
+    sentences = []
+    sentence = []
+    metadata = []
+    for line in lines:
+#         if line[0] == "#":
+#             metadata.append(line)
+#             if "# text =" in line:
+#                 sentence.append(line.split(" text = ")[1].strip())
+        if len(line.strip()) == 0:
+#             item = [metadata]
+#             item.append(sentence)
+            sentences.append(sentence)
+#             metadata = []
+            sentence = []
+        else:
+            split = line.split("\t")
+            sentence.append(split)
+    for sentence in tqdm(sentences):
+        for sent in sentence:
+            total_lines += 1
+            idx = sent[0]
+            word = sent[1]
+            lemma = sent[2]
+            head_idx = int(sent[6])
+            head_word = sentence[head_idx-1][1] if head_idx != 0 else "#ROOT#"
+            relation = sent[7]
+            pair = (head_word, word)
+            triple = (head_word, word, relation)
+            if len(list(conversion_dictionary[pair])) > 0 and relation not in list(conversion_dictionary[pair]):
+                changed += 1
+#                 print(triple, conversion_dictionary[pair])
+                new_relation = list(conversion_dictionary[pair])[0]
+                sent[7] = new_relation
+            else:
+                continue
+        with open(output_file, "a") as outfile:
+            for sent in sentence:
+                outfile.write("\t".join(sent))
+            outfile.write("\n")
+    print(f"Total lines:\t{total_lines}")
+    print(f"Number of lines changed:\t{changed}")
+    return (total_lines, changed)
 
 # def apply_wsj_conversions(input_file, output_file, conversion_dictionary):
 #     # wsj conversion needed because English WSJ data does not have metadata lines, so it messes up the indexing
