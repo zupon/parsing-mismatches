@@ -76,8 +76,11 @@ def process_data_for_noise(filename):
     all_relations = []
     
     for sent in sents:
+#         print(sent)
         for line in sent.split("\n"):
+#             print(line)
             line = line.split("\t")
+#             print(line)
             token = line[1]
             relation = line[7]
             all_relations.append(relation)
@@ -89,7 +92,7 @@ def process_data_for_noise(filename):
     return all_relations, token_to_relations
 
 
-def add_noise_to_data(filename, relation_list, relation_dict, noise_method, outfile):
+def add_noise_to_data(filename, relation_list, relation_dict, noise_method, outfile, num_sents):
     """
     Adds noise to a conllu file based on the chosen method.
     
@@ -111,13 +114,15 @@ def add_noise_to_data(filename, relation_list, relation_dict, noise_method, outf
         file_text = infile.read()
     sents = file_text.rstrip().split("\n\n")
     
+    print(f"total sentences in file:  {len(sents)}")
+    
     # Get total number of contentful lines
-    for sent in sents:
+    for sent in sents[:num_sents]:
         for line in sent.split("\n"):
             total += 1
     
     # Get types of relations, to not bias towards more frequent labels.
-    relation_list = list(Counter(relation_list))
+#     relation_list = list(Counter(relation_list))
 #     print(f"Total number of relations:  {len(relation_list)}.")
     
     # Do (some) stuff based on noise_method.
@@ -141,7 +146,7 @@ def add_noise_to_data(filename, relation_list, relation_dict, noise_method, outf
     # Loop through the lines and change relations as needed,
     # based on the noise_method.
     with open(outfile, "w") as o:
-        for sent in tqdm(sents):
+        for sent in tqdm(sents[:num_sents]):
             for line in sent.split("\n"):
                 og_line = line
                 line = line.split("\t")
@@ -740,6 +745,7 @@ def get_conversions_bilingual_vectors(sentences, this_data, other_data, vector_f
         
         sentences: the dictionary of word pairs, their relations, and the sentences they're found in
     """
+#     print("\nDEBUG\tget_conversions_bilingual_vectors")
     vectors_this = Magnitude(vector_file_this)
     vectors_that = Magnitude(vector_file_that)
     
@@ -753,6 +759,7 @@ def get_conversions_bilingual_vectors(sentences, this_data, other_data, vector_f
         original_pairs += 1
         head_word = pair[0]
         dependent_word = pair[1]
+#         print("head-dependent pair:\t", head_word, "\t", dependent_word)
 
 #         print(f"Top 10 most similar to head word '{head_word}':")
 #         print(vectors_this.most_similar(head_word, topn=10))
@@ -764,8 +771,8 @@ def get_conversions_bilingual_vectors(sentences, this_data, other_data, vector_f
 #         print(f"Top 10 most similar in other vectors to dependent word'{dependent_word}':")
 #         print(vectors_that.most_similar(vectors_this.query(dependent_word), topn=10))
         
-        head_word_replacements = [x[0] for x in vectors_that.most_similar(vectors_this.query(head_word), topn=10)]
-        dependent_word_replacements = [x[0] for x in vectors_that.most_similar(vectors_this.query(dependent_word), topn=10)]
+        head_word_replacements = [x[0] for x in vectors_that.most_similar(head_word, topn=10)]
+        dependent_word_replacements = [x[0] for x in vectors_that.most_similar(dependent_word, topn=10)]
         
 #         print(f"\nhead_word_replacements:\t{len(head_word_replacements)}")
 #         print(head_word_replacements)
@@ -776,6 +783,9 @@ def get_conversions_bilingual_vectors(sentences, this_data, other_data, vector_f
                                   set(dependent_word_replacements),
                                   other_data)
         changed_pairs += len(new_pairs)
+#         print("new pairs:")
+#         for x in new_pairs:
+#             print(x)
 #         print(f"new pairs:\t{len(new_pairs)}")
         
         # relations for this pair in this corpus
